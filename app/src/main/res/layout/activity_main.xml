@@ -27,7 +27,7 @@
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/title_home" />
+            android:text="@string/title_map" />
 
     </FrameLayout>
 
@@ -36,7 +36,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
+        app:itemBackground="@color/colorWhite"
+        app:itemIconTint="@drawable/state_nav_item_color"
+        app:itemTextColor="@drawable/state_nav_item_color"
         app:menu="@menu/navigation" />
 
 </LinearLayout>
