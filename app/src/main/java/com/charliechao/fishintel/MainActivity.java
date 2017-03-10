@@ -2,7 +2,6 @@ package com.charliechao.fishintel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,15 +9,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import layout.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 
-public class MainActivity extends AppCompatActivity implements MapFragment.OnMapMarkerClickListener {
+public class MainActivity extends AppCompatActivity {
 
     public static final String DEBUG_TAG = "MainActivity";
 
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
                 case R.id.navigation_map:
                     mToolbarLogo.setVisibility(View.VISIBLE);
                     mToolbarTitle.setVisibility(View.GONE);
-                    showFragment(MapFragment.newInstance());
+                    showFragment(SupportMapFragment.newInstance());
                     return true;
                 case R.id.navigation_spots:
                     mToolbarLogo.setVisibility(View.GONE);
@@ -84,12 +82,12 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         // Show first fragment
-        showFragment(mFragment);
+        showFragment(SupportMapFragment.newInstance());
     }
 
     private void showFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.layout_content, fragment, "main");
+        ft.replace(R.id.layout_content, fragment);
         ft.commit();
         mFragment = fragment;
     }
@@ -99,11 +97,6 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
             getSupportFragmentManager().beginTransaction().remove(mFragment).commit();
         }
         mFragment = null;
-    }
-
-    @Override
-    public void onMapMarkerClick(int spotId) {
-        Log.i(DEBUG_TAG, String.valueOf(spotId));
     }
 
 }
