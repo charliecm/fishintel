@@ -1,16 +1,21 @@
 package com.charliechao.fishintel;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    private ImageView mToolbarLogo;
+    private TextView mToolbarTitle;
     private Toolbar mToolbar;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -19,17 +24,24 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_map);
+                case R.id.navigation_map:
+                    mToolbarLogo.setVisibility(View.VISIBLE);
+                    mToolbarTitle.setVisibility(View.GONE);
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_spots);
+                case R.id.navigation_spots:
+                    mToolbarLogo.setVisibility(View.GONE);
+                    mToolbarTitle.setVisibility(View.VISIBLE);
+                    mToolbarTitle.setText(R.string.title_spots);
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_species);
+                case R.id.navigation_species:
+                    mToolbarLogo.setVisibility(View.GONE);
+                    mToolbarTitle.setVisibility(View.VISIBLE);
+                    mToolbarTitle.setText(R.string.title_species);
                     return true;
                 case R.id.navigation_settings:
-                    mTextMessage.setText(R.string.title_settings);
+                    mToolbarLogo.setVisibility(View.GONE);
+                    mToolbarTitle.setVisibility(View.VISIBLE);
+                    mToolbarTitle.setText(R.string.title_settings);
                     return true;
             }
             return false;
@@ -43,10 +55,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // Toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        mToolbarLogo = (ImageView) findViewById(R.id.image_toolbar_main_logo);
+        mToolbarTitle = (TextView) findViewById(R.id.text_toolbar_main_title);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Bottom nav
-        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
