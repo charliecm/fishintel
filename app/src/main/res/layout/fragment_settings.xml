@@ -1,0 +1,94 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.charliechao.fishintel.SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:text="@string/settings_temperature_unit"
+            style="@style/TextAppearance.AppCompat.Body1" />
+
+        <RadioGroup
+            android:id="@+id/settings_radio_temperature_unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/settings_radio_temperature_celsius"
+                android:text="@string/settings_celsius"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:textAlignment="center"
+                style="@style/AppTheme.RadioButton" />
+            <RadioButton
+                android:id="@+id/settings_radio_temperature_fahrenheit"
+                android:text="@string/settings_fahrenheit"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:textAlignment="center"
+                style="@style/AppTheme.RadioButton" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:text="@string/settings_metric_unit"
+            style="@style/TextAppearance.AppCompat.Body1" />
+
+        <RadioGroup
+            android:id="@+id/settings_radio_metric_unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/settings_radio_metric_metric"
+                android:text="@string/settings_metric"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:textAlignment="center"
+                style="@style/AppTheme.RadioButton" />
+            <RadioButton
+                android:id="@+id/settings_radio_metric_imperial"
+                android:text="@string/settings_imperial"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:textAlignment="center"
+                style="@style/AppTheme.RadioButton" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/settings_text_app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/AppTheme.TextAppearance"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_authors"
+            android:textAppearance="@style/AppTheme.TextAppearance" />
+
+    </LinearLayout>
+
+</ScrollView>

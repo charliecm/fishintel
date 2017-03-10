@@ -1,6 +1,7 @@
 package com.charliechao.fishintel;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,8 @@ import layout.MapFragment;
 public class MainActivity extends AppCompatActivity implements MapFragment.OnMapMarkerClickListener {
 
     public static final String DEBUG_TAG = "MainActivity";
+
+    private SharedPreferences mSharedPrefs;
 
     private Fragment mFragment;
     private ImageView mToolbarLogo;
@@ -67,6 +70,10 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Check preferences
+        // TODO: Check first-time usage
+        mSharedPrefs = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        mSharedPrefs.edit().putString(Constants.PREF_KEY_VERSION, String.valueOf(BuildConfig.VERSION_CODE));
         // Toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
         mToolbarLogo = (ImageView) findViewById(R.id.image_toolbar_main_logo);
