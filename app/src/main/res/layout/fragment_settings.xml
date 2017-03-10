@@ -33,7 +33,7 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="44dp"
-                android:textAlignment="center"
+                android:gravity="center"
                 style="@style/AppTheme.RadioButton" />
             <RadioButton
                 android:id="@+id/settings_radio_temperature_fahrenheit"
@@ -41,7 +41,7 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="44dp"
-                android:textAlignment="center"
+                android:gravity="center"
                 style="@style/AppTheme.RadioButton" />
         </RadioGroup>
 
@@ -64,7 +64,7 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="44dp"
-                android:textAlignment="center"
+                android:gravity="center"
                 style="@style/AppTheme.RadioButton" />
             <RadioButton
                 android:id="@+id/settings_radio_metric_imperial"
@@ -72,7 +72,7 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="44dp"
-                android:textAlignment="center"
+                android:gravity="center"
                 style="@style/AppTheme.RadioButton" />
         </RadioGroup>
 
