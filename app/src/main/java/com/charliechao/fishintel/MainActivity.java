@@ -9,14 +9,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.SupportMapFragment;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MapFragment.OnMapMarkerClickListener {
 
     public static final String DEBUG_TAG = "MainActivity";
 
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_map:
                     mToolbarLogo.setVisibility(View.VISIBLE);
                     mToolbarTitle.setVisibility(View.GONE);
-                    showFragment(SupportMapFragment.newInstance());
+                    showFragment(MapFragment.newInstance());
                     return true;
                 case R.id.navigation_spots:
                     mToolbarLogo.setVisibility(View.GONE);
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         // Show first fragment
-        showFragment(SupportMapFragment.newInstance());
+        showFragment(MapFragment.newInstance());
     }
 
     private void showFragment(Fragment fragment) {
@@ -97,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().remove(mFragment).commit();
         }
         mFragment = null;
+    }
+
+    @Override
+    public void onMapMarkerClick(int spotId) {
+        Log.d(DEBUG_TAG, "Spot clicked:" + spotId);
     }
 
 }
