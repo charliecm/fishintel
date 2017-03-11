@@ -1,15 +1,29 @@
 package com.charliechao.fishintel;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MapFragment.OnMapMarkerClickListener {
 
-    private TextView mTextMessage;
+    public static final String DEBUG_TAG = "MainActivity";
+
+    private ImageView mToolbarLogo;
+    private TextView mToolbarTitle;
+    private Fragment mFragment;
+    private MapFragment mMapFragment;
+    private SettingsFragment mSettingsFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -17,14 +31,28 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                case R.id.navigation_map:
+                    mToolbarLogo.setVisibility(View.VISIBLE);
+                    mToolbarTitle.setVisibility(View.GONE);
+                    showFragment(mMapFragment);
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.navigation_spots:
+                    mToolbarLogo.setVisibility(View.GONE);
+                    mToolbarTitle.setVisibility(View.VISIBLE);
+                    mToolbarTitle.setText(R.string.title_spots);
+                    // TODO: Show proper fragment
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.navigation_species:
+                    mToolbarLogo.setVisibility(View.GONE);
+                    mToolbarTitle.setVisibility(View.VISIBLE);
+                    mToolbarTitle.setText(R.string.title_species);
+                    // TODO: Show proper fragment
+                    return true;
+                case R.id.navigation_settings:
+                    mToolbarLogo.setVisibility(View.GONE);
+                    mToolbarTitle.setVisibility(View.VISIBLE);
+                    mToolbarTitle.setText(R.string.title_settings);
+                    showFragment(mSettingsFragment);
                     return true;
             }
             return false;
@@ -36,10 +64,41 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mTextMessage = (TextView) findViewById(R.id.message);
+        // Check preferences
+        // TODO: Check first-time usage
+        SharedPreferences sharedPrefs = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        sharedPrefs.edit().putString(Constants.PREF_KEY_VERSION, String.valueOf(BuildConfig.VERSION_CODE)).apply();
+        // Toolbar
+        mToolbarLogo = (ImageView) findViewById(R.id.image_toolbar_main_logo);
+        mToolbarTitle = (TextView) findViewById(R.id.text_toolbar_main_title);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar_main));
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        // Bottom nav
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        // Show first fragment
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        mFragment = mMapFragment = MapFragment.newInstance();
+        ft.add(R.id.layout_content, mMapFragment);
+        mSettingsFragment = SettingsFragment.newInstance();
+        ft.add(R.id.layout_content, mSettingsFragment);
+        ft.hide(mSettingsFragment);
+        ft.commit();
+    }
+
+    private void showFragment(Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (mFragment != null) {
+            ft.hide(mFragment);
+        }
+        ft.show(fragment);
+        ft.commit();
+        mFragment = fragment;
+    }
+
+    @Override
+    public void onMapMarkerClick(int spotId) {
+        Log.d(DEBUG_TAG, "Spot clicked:" + spotId);
     }
 
 }
