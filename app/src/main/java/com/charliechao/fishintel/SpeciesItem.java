@@ -10,9 +10,9 @@ public class SpeciesItem {
     private String mType;
     private String mDescription;
     private int[] mSpotsIds;
-    private Drawable mImage;
+    private int mImage;
 
-    public SpeciesItem(int id, String name, String latinName, String type, String description, int[] spotsIds, Drawable image){
+    public SpeciesItem(int id, String name, String latinName, String type, String description, int[] spotsIds, int image){
         mId = id;
         mName = name;
         mLatinName = latinName;
@@ -44,7 +44,7 @@ public class SpeciesItem {
 
     public String getDescription() {return mDescription;}
 
-    public Drawable getImage() {
+    public int getImage() {
         return mImage;
     }
 
