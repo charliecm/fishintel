@@ -19,8 +19,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.charliechao.fishintel.dummy.DummyContent;
-
 public class MainActivity extends AppCompatActivity implements
         MapFragment.OnMapMarkerClickListener,
         SpotsFragment.OnSpotsListInteractionListener,
@@ -145,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onSpotsListInteraction(DummyContent.DummyItem item) {
+    public void onSpotsListInteraction(SpotItem item) {
 
     }
 }
