@@ -18,7 +18,7 @@ public class ContentDatabase extends SQLiteAssetHelper {
     }
 
     public SpotItem[] getSpots(int[] ids) {
-        String[] columns = { "id", "name", "regionId", "areaId", "proxyCity", "latitude", "longitude", "specieIds" };
+        String[] columns = { "id", "name", "regionId", "areaId", "proxyCity", "latitude", "longitude", "speciesIds" };
         String selection = "";
         if (ids != null) {
             selection = "id in (" + ids.toString() + ")";
