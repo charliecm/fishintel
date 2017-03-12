@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.charliechao.fishintel.SpotFragment.OnListFragmentInteractionListener;
+import com.charliechao.fishintel.SpotsFragment.OnListFragmentInteractionListener;
 import com.charliechao.fishintel.dummy.DummyContent.DummyItem;
 
 import java.util.List;

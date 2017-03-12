@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
     private TextView mToolbarTitle;
     private Fragment mFragment;
     private MapFragment mMapFragment;
+    private SpotsFragment mSpotsFragment;
+    private SpeciesFragment mSpeciesFragment;
     private SettingsFragment mSettingsFragment;
     private ContentDatabase mDB;
 
@@ -94,6 +96,12 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         mFragment = mMapFragment = MapFragment.newInstance();
         ft.add(R.id.layout_content, mMapFragment);
+        mSpotsFragment = SpotsFragment.newInstance();
+        ft.add(R.id.layout_content, mSpotsFragment);
+        ft.hide(mSpotsFragment);
+        mSpeciesFragment = SpeciesFragment.newInstance();
+        ft.add(R.id.layout_content, mSpeciesFragment);
+        ft.hide(mSpeciesFragment);
         mSettingsFragment = SettingsFragment.newInstance();
         ft.add(R.id.layout_content, mSettingsFragment);
         ft.hide(mSettingsFragment);
