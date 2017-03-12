@@ -7,20 +7,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.charliechao.fishintel.SpotsFragment.OnSpotsListInteractionListener;
-import com.charliechao.fishintel.dummy.DummyContent.DummyItem;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link SpotsFragment.OnSpotsListInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<SpotsRecyclerViewAdapter.ViewHolder> {
 
-    private  final SpotItem[] mValues;
+    private final SpotItem[] mValues;
     private final OnSpotsListInteractionListener mListener;
 
     public SpotsRecyclerViewAdapter(SpotItem[] items, SpotsFragment.OnSpotsListInteractionListener listener) {
-         mValues = items;
+        mValues = items;
         mListener = listener;
     }
 
@@ -34,12 +28,8 @@ public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<SpotsRecycler
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         SpotItem item = mValues[position];
-
-
         holder.mItem = item;
-
-
-        holder.mContentView.setText(item.getName());
+        holder.mName.setText(item.getName());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,21 +46,16 @@ public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<SpotsRecycler
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
 
-        public final TextView mContentView;
+        public final View mView;
+        public final TextView mName;
         public SpotItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-
-            mContentView = (TextView) view.findViewById(R.id.spot_list_text_name);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            mName = (TextView) view.findViewById(R.id.spot_list_text_name);
         }
     }
+
 }

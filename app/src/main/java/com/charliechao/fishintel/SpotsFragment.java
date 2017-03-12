@@ -12,7 +12,8 @@ import android.view.ViewGroup;
 public class SpotsFragment extends Fragment {
 
     private OnSpotsListInteractionListener mListener;
-    private ContentDatabase db;
+
+    private ContentDatabase mDB;
 
     public SpotsFragment() {}
 
@@ -30,24 +31,17 @@ public class SpotsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_spot_list, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new SpotsRecyclerViewAdapter(db.getAllSpots(), mListener));
-        }
+        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.spot_list_view);
+        recyclerView.setAdapter(new SpotsRecyclerViewAdapter(mDB.getAllSpots(), mListener));
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnSpotsListInteractionListener) {
-            db = new ContentDatabase(context);
             mListener = (OnSpotsListInteractionListener) context;
+            mDB = new ContentDatabase(context);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnSpotsListInteractionListener");
