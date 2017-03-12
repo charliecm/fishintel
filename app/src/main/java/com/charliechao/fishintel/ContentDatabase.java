@@ -3,6 +3,7 @@ package com.charliechao.fishintel;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -11,10 +12,12 @@ import java.util.ArrayList;
 public class ContentDatabase extends SQLiteAssetHelper {
 
     private SQLiteDatabase mDB;
+    private Context mContext;
 
     public ContentDatabase(Context context) {
         super(context, Constants.DB_CONTENT_NAME, null, Constants.DB_CONTENT_VERSION);
         mDB = getWritableDatabase();
+        mContext = context;
     }
 
     public SpotItem[] getSpots(int[] ids) {
@@ -75,7 +78,12 @@ public class ContentDatabase extends SQLiteAssetHelper {
             for (int i = 0; i < spotsIds.length; i++) {
                 spotsIds[i] = Integer.parseInt(spotsIdsStr[i]);
             }
-            items.add(new SpeciesItem(id, name, latinName, type, description, spotsIds));
+            Drawable img = null;
+            int resId = mContext.getResources().getIdentifier("species_" + String.valueOf(id), "drawable", null);
+            if (resId != 0) {
+                img = mContext.getResources().getDrawable(resId);
+            }
+            items.add(new SpeciesItem(id, name, latinName, type, description, spotsIds, img));
         }
         cursor.close();
         return items.toArray(new SpeciesItem[items.size()]);
