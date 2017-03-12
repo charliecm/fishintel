@@ -84,7 +84,7 @@ public class ContentDatabase extends SQLiteAssetHelper {
                     spotsIds[i] = Integer.parseInt(spotsIdsStr[i]);
                 }
             }
-            int img = mContext.getResources().getIdentifier("species_" + String.valueOf(id), "drawable", null);
+            int img = mContext.getResources().getIdentifier("species_" + String.valueOf(id), "drawable", mContext.getPackageName());
             items.add(new SpeciesItem(id, name, latinName, type, description, spotsIds, img));
         }
         cursor.close();
