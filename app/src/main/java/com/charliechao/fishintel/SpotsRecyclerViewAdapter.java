@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.charliechao.fishintel.SpotsFragment.OnSpotsListInteractionListener;
 import com.charliechao.fishintel.dummy.DummyContent.DummyItem;
 
-import java.util.List;
-
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
  * specified {@link SpotsFragment.OnSpotsListInteractionListener}.
@@ -18,11 +16,11 @@ import java.util.List;
  */
 public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<SpotsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private  final SpotItem[] mValues;
     private final OnSpotsListInteractionListener mListener;
 
-    public SpotsRecyclerViewAdapter(List<DummyItem> items, SpotsFragment.OnSpotsListInteractionListener listener) {
-        mValues = items;
+    public SpotsRecyclerViewAdapter(SpotItem[] items, SpotsFragment.OnSpotsListInteractionListener listener) {
+         mValues = items;
         mListener = listener;
     }
 
@@ -35,16 +33,17 @@ public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<SpotsRecycler
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        SpotItem item = mValues[position];
 
+
+        holder.mItem = item;
+
+
+        holder.mContentView.setText(item.getName());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
                     mListener.onSpotsListInteraction(holder.mItem);
                 }
             }
@@ -53,20 +52,20 @@ public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<SpotsRecycler
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mValues.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
+
         public final TextView mContentView;
-        public DummyItem mItem;
+        public SpotItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+
+            mContentView = (TextView) view.findViewById(R.id.spot_list_text_name);
         }
 
         @Override

@@ -9,12 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.charliechao.fishintel.dummy.DummyContent;
-import com.charliechao.fishintel.dummy.DummyContent.DummyItem;
-
 public class SpotsFragment extends Fragment {
 
     private OnSpotsListInteractionListener mListener;
+    private ContentDatabase db;
 
     public SpotsFragment() {}
 
@@ -38,7 +36,7 @@ public class SpotsFragment extends Fragment {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new SpotsRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new SpotsRecyclerViewAdapter(db.getAllSpots(), mListener));
         }
         return view;
     }
@@ -48,6 +46,7 @@ public class SpotsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnSpotsListInteractionListener) {
+            db = new ContentDatabase(context);
             mListener = (OnSpotsListInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
@@ -62,7 +61,7 @@ public class SpotsFragment extends Fragment {
     }
 
     public interface OnSpotsListInteractionListener {
-        void onSpotsListInteraction(DummyItem item);
+        void onSpotsListInteraction(SpotItem item);
     }
 
 }
