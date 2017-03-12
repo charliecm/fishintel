@@ -3,15 +3,10 @@ package com.charliechao.fishintel;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.charliechao.fishintel.dummy.DummyContent;
-import com.charliechao.fishintel.dummy.DummyContent.DummyItem;
 
 /**
  * A fragment representing a list of Items.
@@ -26,6 +21,7 @@ public class SpotFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private ContentDatabase db;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -62,12 +58,8 @@ public class SpotFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new SpotsRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+            recyclerView.setAdapter(new SpotsRecyclerViewAdapter(db.getAllSpots(), mListener));
         }
         return view;
     }
@@ -102,6 +94,6 @@ public class SpotFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(SpotItem item);
     }
 }

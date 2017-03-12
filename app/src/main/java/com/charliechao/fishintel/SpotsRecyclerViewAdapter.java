@@ -18,10 +18,11 @@ import java.util.List;
  */
 public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<SpotsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final SpotItem[] mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public SpotsRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+
+    public SpotsRecyclerViewAdapter(SpotItem[] items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -34,33 +35,35 @@ public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<SpotsRecycler
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+    public void onBindViewHolder(final SpotsRecyclerViewAdapter.ViewHolder holder, int position) {
+        SpotItem item = mValues[position];
+        int id = item.getId();
 
+        holder.mItem = item;
+
+        if (id <= 0) {
+            holder.mIdView.setText(id);
+        }
+        holder.mContentView.setText(item.getName());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onSpotsListInteraction(holder.mItem);
                 }
             }
         });
     }
-
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mValues.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public SpotItem mItem;
 
         public ViewHolder(View view) {
             super(view);

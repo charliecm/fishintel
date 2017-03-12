@@ -11,10 +11,11 @@ import java.util.ArrayList;
 public class ContentDatabase extends SQLiteAssetHelper {
 
     private SQLiteDatabase mDB;
-
+    private Context mContext;
     public ContentDatabase(Context context) {
         super(context, Constants.DB_CONTENT_NAME, null, Constants.DB_CONTENT_VERSION);
         mDB = getWritableDatabase();
+        mContext = context;
     }
 
     public SpotItem[] getSpots(int[] ids) {
@@ -75,7 +76,8 @@ public class ContentDatabase extends SQLiteAssetHelper {
             for (int i = 0; i < spotsIds.length; i++) {
                 spotsIds[i] = Integer.parseInt(spotsIdsStr[i]);
             }
-            items.add(new SpeciesItem(id, name, latinName, type, description, spotsIds));
+            int img = mContext.getResources().getIdentifier("species_" + String.valueOf(id), "drawable", mContext.getPackageName());
+            items.add(new SpeciesItem(id, name, latinName, type, description, spotsIds, img));
         }
         cursor.close();
         return items.toArray(new SpeciesItem[items.size()]);

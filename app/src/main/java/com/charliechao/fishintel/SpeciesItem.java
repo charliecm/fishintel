@@ -11,8 +11,9 @@ public class SpeciesItem {
     private String mType;
     private String mDescription;
     private int[] mLocationIds;
+    private int mImage;
 
-    public SpeciesItem(int id, String name, String latinName, String type, String description, int[] locationIds){
+    public SpeciesItem(int id, String name, String latinName, String type, String description, int[] locationIds,int image){
 
 
             mId = id;
@@ -21,6 +22,7 @@ public class SpeciesItem {
             mType = type;
             mDescription = description;
             mLocationIds = locationIds;
+        mImage = image;
 
 
     }
@@ -44,6 +46,8 @@ public class SpeciesItem {
     }
 
     public String getdescription() {return mDescription;}
-
+    public int getImage() {
+        return mImage;
+    }
 
 }
