@@ -6,23 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.charliechao.fishintel.SpotFragment.OnListFragmentInteractionListener;
+import com.charliechao.fishintel.SpotsFragment.OnSpotsListInteractionListener;
 import com.charliechao.fishintel.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * specified {@link SpotsFragment.OnSpotsListInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<SpotsRecyclerViewAdapter.ViewHolder> {
 
-    private final SpotItem[] mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final List<DummyItem> mValues;
+    private final OnSpotsListInteractionListener mListener;
 
-
-    public SpotsRecyclerViewAdapter(SpotItem[] items, OnListFragmentInteractionListener listener) {
+    public SpotsRecyclerViewAdapter(List<DummyItem> items, SpotsFragment.OnSpotsListInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -35,35 +34,33 @@ public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<SpotsRecycler
     }
 
     @Override
-    public void onBindViewHolder(final SpotsRecyclerViewAdapter.ViewHolder holder, int position) {
-        SpotItem item = mValues[position];
-        int id = item.getId();
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        holder.mItem = mValues.get(position);
+        holder.mIdView.setText(mValues.get(position).id);
+        holder.mContentView.setText(mValues.get(position).content);
 
-        holder.mItem = item;
-
-        if (id <= 0) {
-            holder.mIdView.setText(id);
-        }
-        holder.mContentView.setText(item.getName());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
+                    // Notify the active callbacks interface (the activity, if the
+                    // fragment is attached to one) that an item has been selected.
                     mListener.onSpotsListInteraction(holder.mItem);
                 }
             }
         });
     }
+
     @Override
     public int getItemCount() {
-        return mValues.length;
+        return mValues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public SpotItem mItem;
+        public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);

@@ -8,14 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-;
-
 public class SpeciesFragment extends Fragment {
 
     private OnSpeciesListInteractionListener mListener;

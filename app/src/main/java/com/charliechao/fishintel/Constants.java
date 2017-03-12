@@ -16,4 +16,7 @@ final class Constants {
     static final String DB_CONTENT_NAME = "content.db";
     static final int DB_CONTENT_VERSION = 1;
 
+    // Permissions
+    static final int PERMISSION_LOCATION = 0;
+
 }

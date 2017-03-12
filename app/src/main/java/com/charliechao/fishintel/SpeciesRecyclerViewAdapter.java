@@ -1,5 +1,6 @@
 package com.charliechao.fishintel;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,19 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import android.graphics.drawable.Drawable;
-
 import com.charliechao.fishintel.SpeciesFragment.OnSpeciesListInteractionListener;
-
-
-
 
 public class SpeciesRecyclerViewAdapter extends RecyclerView.Adapter<SpeciesRecyclerViewAdapter.ViewHolder> {
 
     private final SpeciesItem[] mValues;
-    private final SpeciesFragment.OnSpeciesListInteractionListener mListener;
+    private final OnSpeciesListInteractionListener mListener;
 
-    public SpeciesRecyclerViewAdapter(SpeciesItem[] items, SpeciesFragment.OnSpeciesListInteractionListener listener) {
+    public SpeciesRecyclerViewAdapter(SpeciesItem[] items, OnSpeciesListInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -65,9 +61,8 @@ public class SpeciesRecyclerViewAdapter extends RecyclerView.Adapter<SpeciesRecy
         public ViewHolder(View view) {
             super(view);
             mView = view;
-
-            mImage = (ImageView) view.findViewById(R.id.species_species_list_img);
-            mName = (TextView) view.findViewById(R.id.species_content);
+            mImage = (ImageView) view.findViewById(R.id.species_list_img);
+            mName = (TextView) view.findViewById(R.id.species_list_text_name);
         }
 
     }

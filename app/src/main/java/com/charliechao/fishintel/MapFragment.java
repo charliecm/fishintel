@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,20 +19,22 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback, GoogleMap.OnMarkerClickListener {
 
     private OnMapMarkerClickListener mListener;
 
+    private ContentDatabase mDB;
     private MapView mMapView;
     private GoogleMap mMap;
 
     public MapFragment() {}
 
     public static MapFragment newInstance() {
-        MapFragment fragment = new MapFragment();
-        return fragment;
+        return new MapFragment();
     }
 
     @Override
@@ -39,6 +42,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Activit
         super.onAttach(context);
         if (context instanceof OnMapMarkerClickListener) {
             mListener = (OnMapMarkerClickListener) context;
+            mDB = new ContentDatabase(context);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -105,27 +109,44 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Activit
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        SpotItem[] items = mDB.getAllSpots();
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        int width = getResources().getDisplayMetrics().widthPixels;
         mMap = googleMap;
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+        for (SpotItem item : items) {
+            LatLng latLng = new LatLng(item.getLatitude(), item.getLongitude());
+            Marker marker = mMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title(item.getName()));
+            marker.setTag(item.getId());
+            builder.include(marker.getPosition());
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), width, width, 120));
+        mMap.setOnMarkerClickListener(this);
+        retrieveLocation();
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        if (mListener != null) {
+            mListener.onMapMarkerClick((int) marker.getTag());
+            return true;
+        }
+        return false;
+    }
+
+    public void retrieveLocation() {
+        if (mMap != null &&
+                ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         } else {
-            // Show rationale and request permission.
+            Toast.makeText(getContext(), "Unable to find your location.", Toast.LENGTH_LONG).show();
         }
-        LatLng sydney = new LatLng(49.2577143, -123.1939438);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Vancouver"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16));
     }
-
-//    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onMapMarkerClick(0);
-//        }
-//    }
 
     public interface OnMapMarkerClickListener {
-        // TODO: Update argument type and name
         void onMapMarkerClick(int spotId);
     }
+
 }

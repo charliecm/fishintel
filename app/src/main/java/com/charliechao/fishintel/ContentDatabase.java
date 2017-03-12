@@ -3,6 +3,7 @@ package com.charliechao.fishintel;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -12,6 +13,7 @@ public class ContentDatabase extends SQLiteAssetHelper {
 
     private SQLiteDatabase mDB;
     private Context mContext;
+
     public ContentDatabase(Context context) {
         super(context, Constants.DB_CONTENT_NAME, null, Constants.DB_CONTENT_VERSION);
         mDB = getWritableDatabase();
@@ -35,9 +37,12 @@ public class ContentDatabase extends SQLiteAssetHelper {
             float latitude = cursor.getFloat(5);
             float longitude = cursor.getFloat(6);
             String[] speciesIdsStr = cursor.getString(7).split(",");
-            int[] speciesIds = new int[speciesIdsStr.length];
-            for (int i = 0; i < speciesIds.length; i++) {
-                speciesIds[i] = Integer.parseInt(speciesIdsStr[i]);
+            int[] speciesIds = new int[0];
+            if (speciesIdsStr[0].length() != 0) {
+                speciesIds = new int[speciesIdsStr.length];
+                for (int i = 0; i < speciesIds.length; i++) {
+                    speciesIds[i] = Integer.parseInt(speciesIdsStr[i]);
+                }
             }
             items.add(new SpotItem(id, name, regionId, areaId, proxyCity, latitude, longitude, speciesIds));
         }
@@ -72,9 +77,12 @@ public class ContentDatabase extends SQLiteAssetHelper {
             String type = cursor.getString(3);
             String description = cursor.getString(4);
             String[] spotsIdsStr = cursor.getString(5).split(",");
-            int[] spotsIds = new int[spotsIdsStr.length];
-            for (int i = 0; i < spotsIds.length; i++) {
-                spotsIds[i] = Integer.parseInt(spotsIdsStr[i]);
+            int[] spotsIds = new int[0];
+            if (spotsIdsStr[0].length() != 0) {
+                spotsIds = new int[spotsIdsStr.length];
+                for (int i = 0; i < spotsIds.length; i++) {
+                    spotsIds[i] = Integer.parseInt(spotsIdsStr[i]);
+                }
             }
             int img = mContext.getResources().getIdentifier("species_" + String.valueOf(id), "drawable", mContext.getPackageName());
             items.add(new SpeciesItem(id, name, latinName, type, description, spotsIds, img));
