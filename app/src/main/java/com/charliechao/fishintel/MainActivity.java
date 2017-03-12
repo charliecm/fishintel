@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
     private Fragment mFragment;
     private MapFragment mMapFragment;
     private SettingsFragment mSettingsFragment;
+    private ContentDatabase mDB;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -84,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
         ft.add(R.id.layout_content, mSettingsFragment);
         ft.hide(mSettingsFragment);
         ft.commit();
+        // Database
+        mDB = new ContentDatabase(this);
+        SpotItem[] items = mDB.getAllSpots();
+        Log.i(DEBUG_TAG, items.toString());
     }
 
     private void showFragment(Fragment fragment) {
