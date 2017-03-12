@@ -3,20 +3,16 @@ package com.charliechao.fishintel;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.charliechao.fishintel.dummy.DummyContent;
-import com.charliechao.fishintel.dummy.DummyContent.DummyItem;
-
 public class SpeciesFragment extends Fragment {
 
     private OnSpeciesListInteractionListener mListener;
 
+    private ContentDatabase mDB;
 
     public SpeciesFragment() {}
 
@@ -37,7 +33,7 @@ public class SpeciesFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setAdapter(new MySpeciesRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new SpeciesRecyclerViewAdapter(mDB.getAllSpecies(), mListener));
         }
         return view;
     }
@@ -48,6 +44,7 @@ public class SpeciesFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnSpeciesListInteractionListener) {
             mListener = (OnSpeciesListInteractionListener) context;
+            mDB = new ContentDatabase(context);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnSpotsListInteractionListener");

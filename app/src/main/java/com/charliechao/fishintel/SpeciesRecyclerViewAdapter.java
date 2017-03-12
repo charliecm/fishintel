@@ -1,27 +1,21 @@
 package com.charliechao.fishintel;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.charliechao.fishintel.SpeciesFragment.OnListFragmentInteractionListener;
-import com.charliechao.fishintel.dummy.DummyContent.DummyItem;
+import com.charliechao.fishintel.SpeciesFragment.OnSpeciesListInteractionListener;
 
-import java.util.List;
+public class SpeciesRecyclerViewAdapter extends RecyclerView.Adapter<SpeciesRecyclerViewAdapter.ViewHolder> {
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class MySpeciesRecyclerViewAdapter extends RecyclerView.Adapter<MySpeciesRecyclerViewAdapter.ViewHolder> {
+    private final SpeciesItem[] mValues;
+    private final OnSpeciesListInteractionListener mListener;
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
-
-    public MySpeciesRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public SpeciesRecyclerViewAdapter(SpeciesItem[] items, OnSpeciesListInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -35,17 +29,18 @@ public class MySpeciesRecyclerViewAdapter extends RecyclerView.Adapter<MySpecies
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
-
+        SpeciesItem item = mValues[position];
+        int image = item.getImage();
+        holder.mItem = item;
+        if (image != 0) {
+            holder.mImage.setImageResource(image);
+        }
+        holder.mName.setText(item.getName());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onSpeciesListInteraction(holder.mItem);
                 }
             }
         });
@@ -53,25 +48,23 @@ public class MySpeciesRecyclerViewAdapter extends RecyclerView.Adapter<MySpecies
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mValues.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final ImageView mImage;
+        public final TextView mName;
+        public SpeciesItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mImage = (ImageView) view.findViewById(R.id.species_list_img);
+            mName = (TextView) view.findViewById(R.id.species_list_text_name);
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
     }
+
 }
