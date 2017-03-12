@@ -52,13 +52,13 @@ public class MainActivity extends AppCompatActivity implements
                     mToolbarLogo.setVisibility(View.GONE);
                     mToolbarTitle.setVisibility(View.VISIBLE);
                     mToolbarTitle.setText(R.string.title_spots);
-                    // TODO: Show proper fragment
+                    showFragment(mSpotsFragment);
                     return true;
                 case R.id.navigation_species:
                     mToolbarLogo.setVisibility(View.GONE);
                     mToolbarTitle.setVisibility(View.VISIBLE);
                     mToolbarTitle.setText(R.string.title_species);
-                    // TODO: Show proper fragment
+                    showFragment(mSpeciesFragment);
                     return true;
                 case R.id.navigation_settings:
                     mToolbarLogo.setVisibility(View.GONE);
