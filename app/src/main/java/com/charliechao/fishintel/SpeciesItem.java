@@ -1,21 +1,28 @@
 package com.charliechao.fishintel;
 
-public class SpeciesItem {
+/**
+ * Created by shuangshengmiao on 2017-03-11.
+ */
 
+public class SpeciesItem {
     private int mId;
     private String mName;
     private String mLatinName;
     private String mType;
     private String mDescription;
-    private int[] mSpotsIds;
+    private int[] mLocationIds;
 
-    public SpeciesItem(int id, String name, String latinName, String type, String description, int[] spotsIds) {
-        mId = id;
-        mName = name;
-        mLatinName = latinName;
-        mType = type;
-        mDescription = description;
-        mSpotsIds = spotsIds;
+    public SpeciesItem(int id, String name, String latinName, String type, String description, int[] locationIds){
+
+
+            mId = id;
+            mName = name;
+            mLatinName = latinName;
+            mType = type;
+            mDescription = description;
+            mLocationIds = locationIds;
+
+
     }
 
     public int getId() {
@@ -25,21 +32,18 @@ public class SpeciesItem {
     public String getName() {
         return mName;
     }
-
-    public String getLatinName() {
+    public String getlatin() {
         return mLatinName;
     }
 
-    public String getType() {
+    public String gettype() {
         return mType;
     }
-
-    public String getDescription() {
-        return mDescription;
+    public int[] getlacationids() {
+        return mLocationIds;
     }
 
-    public int[] getSpotsIds() {
-        return mSpotsIds;
-    }
+    public String getdescription() {return mDescription;}
+
 
 }
