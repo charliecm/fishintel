@@ -19,7 +19,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements MapFragment.OnMapMarkerClickListener {
+import com.charliechao.fishintel.dummy.DummyContent;
+
+public class MainActivity extends AppCompatActivity implements
+        MapFragment.OnMapMarkerClickListener,
+        SpotsFragment.OnSpotsListInteractionListener,
+        SpeciesFragment.OnSpeciesListInteractionListener {
 
     public static final String DEBUG_TAG = "MainActivity";
 
@@ -134,4 +139,13 @@ public class MainActivity extends AppCompatActivity implements MapFragment.OnMap
         Log.d(DEBUG_TAG, "Spot clicked:" + spotId);
     }
 
+    @Override
+    public void onSpeciesListInteraction(SpeciesItem item) {
+
+    }
+
+    @Override
+    public void onSpotsListInteraction(DummyContent.DummyItem item) {
+
+    }
 }

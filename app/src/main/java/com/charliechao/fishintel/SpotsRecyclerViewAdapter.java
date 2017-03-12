@@ -6,22 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.charliechao.fishintel.SpotsFragment.OnListFragmentInteractionListener;
+import com.charliechao.fishintel.SpotsFragment.OnSpotsListInteractionListener;
 import com.charliechao.fishintel.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * specified {@link SpotsFragment.OnSpotsListInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<SpotsRecyclerViewAdapter.ViewHolder> {
 
     private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final OnSpotsListInteractionListener mListener;
 
-    public SpotsRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public SpotsRecyclerViewAdapter(List<DummyItem> items, SpotsFragment.OnSpotsListInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -45,7 +45,7 @@ public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<SpotsRecycler
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onSpotsListInteraction(holder.mItem);
                 }
             }
         });

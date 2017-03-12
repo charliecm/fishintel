@@ -15,7 +15,7 @@ import com.charliechao.fishintel.dummy.DummyContent.DummyItem;
 
 public class SpeciesFragment extends Fragment {
 
-    private OnListFragmentInteractionListener mListener;
+    private OnSpeciesListInteractionListener mListener;
 
 
     public SpeciesFragment() {}
@@ -38,7 +38,6 @@ public class SpeciesFragment extends Fragment {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setAdapter(new MySpeciesRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
         }
         return view;
     }
@@ -47,11 +46,11 @@ public class SpeciesFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof OnSpeciesListInteractionListener) {
+            mListener = (OnSpeciesListInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement OnSpotsListInteractionListener");
         }
     }
 
@@ -61,8 +60,8 @@ public class SpeciesFragment extends Fragment {
         mListener = null;
     }
 
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(SpeciesItem item);
+    public interface OnSpeciesListInteractionListener {
+        void onSpeciesListInteraction(SpeciesItem item);
     }
 
 }

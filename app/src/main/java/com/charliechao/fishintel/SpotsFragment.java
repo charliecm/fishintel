@@ -3,7 +3,6 @@ package com.charliechao.fishintel;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +14,7 @@ import com.charliechao.fishintel.dummy.DummyContent.DummyItem;
 
 public class SpotsFragment extends Fragment {
 
-    private OnListFragmentInteractionListener mListener;
+    private OnSpotsListInteractionListener mListener;
 
     public SpotsFragment() {}
 
@@ -48,11 +47,11 @@ public class SpotsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof OnSpotsListInteractionListener) {
+            mListener = (OnSpotsListInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement OnSpotsListInteractionListener");
         }
     }
 
@@ -62,8 +61,8 @@ public class SpotsFragment extends Fragment {
         mListener = null;
     }
 
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(DummyItem item);
+    public interface OnSpotsListInteractionListener {
+        void onSpotsListInteraction(DummyItem item);
     }
 
 }
