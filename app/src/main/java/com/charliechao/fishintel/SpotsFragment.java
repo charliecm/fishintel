@@ -43,7 +43,7 @@ public class SpotsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_spots_list, container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.spots_list_view);
-        recyclerView.setAdapter(new SpotsRecyclerViewAdapter(mDB.getAllSpots(), mListener));
+        recyclerView.setAdapter(new SpotsRecyclerViewAdapter(mDB.getAllSpots(), mListener, getContext()));
         return view;
     }
 
