@@ -22,6 +22,8 @@ public class SpeciesDetailsActivity extends AppCompatActivity implements SpotsFr
         Intent intent = getIntent();
         if (intent != null) {
             mData = (SpeciesItem) intent.getSerializableExtra("data");
+        } else {
+            finish();
         }
         // Setup toolbar
         findViewById(R.id.image_toolbar_main_logo).setVisibility(View.GONE);
@@ -32,8 +34,6 @@ public class SpeciesDetailsActivity extends AppCompatActivity implements SpotsFr
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        // Set found in header text
-        ((TextView) findViewById(R.id.species_details_text_found_header)).setText("Found In");
         // Set image preview source
         ImageView imgPreview = (ImageView) findViewById(R.id.species_details_image_preview);
         int image = mData.getImage();

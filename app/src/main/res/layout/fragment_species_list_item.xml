@@ -26,6 +26,7 @@
         style="@style/AppTheme.TextAppearance" />
 
     <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/species_list_chevron"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
