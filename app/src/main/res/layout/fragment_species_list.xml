@@ -5,7 +5,8 @@
     android:name="com.charliechao.fishintel.SpeciesFragment"
     tools:context="com.charliechao.fishintel.SpeciesFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/species_list_view"
