@@ -125,6 +125,9 @@ public class MainActivity extends AppCompatActivity implements
 
     private void showFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (mFragment == fragment) {
+            return;
+        }
         if (mFragment != null) {
             // Hide currently visible fragment
             ft.hide(mFragment);
