@@ -23,12 +23,20 @@ public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     private final OnSpotsListInteractionListener mListener;
 
     public SpotsRecyclerViewAdapter(SpotItem[] items, SpotsFragment.OnSpotsListInteractionListener listener, Context context) {
-        HashMap<String, List<SpotItem>> map = getGroupedList(items, context);
-        mValues = new ArrayList<>();
-        for (String group: map.keySet()) {
-            ListHeaderItem header = new ListHeaderItem(group);
-            mValues.add(header);
-            for (SpotItem spot: map.get(group)) {
+        if (context != null) {
+            HashMap<String, List<SpotItem>> map = getGroupedList(items, context);
+            mValues = new ArrayList<>();
+            for (String group: map.keySet()) {
+                ListHeaderItem header = new ListHeaderItem(group);
+                mValues.add(header);
+                for (SpotItem spot: map.get(group)) {
+                    ListObjectItem<SpotItem> item = new ListObjectItem<>(spot);
+                    mValues.add(item);
+                }
+            }
+        } else {
+            mValues = new ArrayList<>();
+            for (SpotItem spot: items) {
                 ListObjectItem<SpotItem> item = new ListObjectItem<>(spot);
                 mValues.add(item);
             }
