@@ -22,7 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class SpotDetailsActivity extends AppCompatActivity implements SpeciesFragment.OnSpeciesListInteractionListener {
+public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnSpeciesListInteractionListener {
 
     private SpotItem mData;
     private ImageView mMap;

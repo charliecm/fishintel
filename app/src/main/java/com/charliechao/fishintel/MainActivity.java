@@ -12,20 +12,18 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class MainActivity extends Activity implements
         MapFragment.OnMapMarkerClickListener,
         SpotsFragment.OnSpotsListInteractionListener,
         SpeciesFragment.OnSpeciesListInteractionListener {
-
-    public static final String DEBUG_TAG = "MainActivity";
 
     private ImageView mToolbarLogo;
     private TextView mToolbarTitle;

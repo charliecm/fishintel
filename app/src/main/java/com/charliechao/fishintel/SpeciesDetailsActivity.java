@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class SpeciesDetailsActivity extends AppCompatActivity implements SpotsFragment.OnSpotsListInteractionListener {
+public class SpeciesDetailsActivity extends Activity implements SpotsFragment.OnSpotsListInteractionListener {
 
     private SpeciesItem mData;
 
