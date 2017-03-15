@@ -19,9 +19,18 @@
         android:id="@+id/species_list_text_name"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity="center_vertical"
         android:layout_marginLeft="12dp"
         android:text="Chinook Salmon"
         style="@style/AppTheme.TextAppearance" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="8dp"
+        android:tint="@color/grayLight"
+        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
 
 </LinearLayout>

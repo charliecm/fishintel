@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@drawable/state_list_item_bg">
 
     <TextView
         android:id="@+id/spots_list_text_name"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="14dp"
         android:layout_marginBottom="14dp"
         android:gravity="left|center_vertical"
-        android:text="Hi"
+        android:text="Item name"
         style="@style/AppTheme.TextAppearance" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="8dp"
+        android:tint="@color/grayLight"
+        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
 
 </LinearLayout>
