@@ -3,12 +3,15 @@ package com.charliechao.fishintel;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Drawable;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+/**
+ * Custom database instance and helper class for working with content data.
+ */
 public class ContentDatabase extends SQLiteAssetHelper {
 
     private SQLiteDatabase mDB;
@@ -24,7 +27,7 @@ public class ContentDatabase extends SQLiteAssetHelper {
         String[] columns = { "id", "name", "regionId", "areaId", "proxyCity", "latitude", "longitude", "speciesIds" };
         String selection = "";
         if (ids != null) {
-            selection = "id in (" + ids.toString() + ")";
+            selection = "id in (" + toSimpleList(ids) + ")";
         }
         Cursor cursor = mDB.query("spots", columns, selection, null, null, null, null);
         ArrayList<SpotItem> items = new ArrayList<>();
@@ -66,7 +69,7 @@ public class ContentDatabase extends SQLiteAssetHelper {
         String[] columns = { "id", "name", "latinName", "type", "description", "spotsIds" };
         String selection = "";
         if (ids != null) {
-            selection = "id in (" + ids.toString() + ")";
+            selection = "id in (" + toSimpleList(ids) + ")";
         }
         Cursor cursor = mDB.query("species", columns, selection, null, null, null, null);
         ArrayList<SpeciesItem> items = new ArrayList<>();
@@ -107,7 +110,7 @@ public class ContentDatabase extends SQLiteAssetHelper {
         String[] columns = { "id", "name", "url" };
         String selection = "";
         if (ids != null) {
-            selection = "id in (" + ids.toString() + ")";
+            selection = "id in (" + toSimpleList(ids) + ")";
         }
         Cursor cursor = mDB.query("areas", columns, selection, null, null, null, null);
         ArrayList<AreaItem> items = new ArrayList<>();
@@ -133,11 +136,11 @@ public class ContentDatabase extends SQLiteAssetHelper {
         return getAreas(null);
     }
 
-    public RegionItem[] getRegions(int[] ids) {
+    public RegionItem[] getRegion(int[] ids) {
         String[] columns = { "id", "name", "region", "url" };
         String selection = "";
         if (ids != null) {
-            selection = "id in (" + ids.toString() + ")";
+            selection = "id in (" + toSimpleList(ids) + ")";
         }
         Cursor cursor = mDB.query("regions", columns, selection, null, null, null, null);
         ArrayList<RegionItem> items = new ArrayList<>();
@@ -152,16 +155,21 @@ public class ContentDatabase extends SQLiteAssetHelper {
         return items.toArray(new RegionItem[items.size()]);
     }
 
-    public RegionItem getRegions(int id) {
+    public RegionItem getRegion(int id) {
         try {
-            return getRegions(new int[]{ id })[0];
+            return getRegion(new int[]{ id })[0];
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }
     }
 
     public RegionItem[] getAllRegions() {
-        return getRegions(null);
+        return getRegion(null);
+    }
+
+    private String toSimpleList(int[] array) {
+        String output = Arrays.toString(array);
+        return output.substring(1, output.length() - 1);
     }
 
 }
