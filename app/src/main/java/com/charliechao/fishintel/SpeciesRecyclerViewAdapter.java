@@ -1,6 +1,6 @@
 package com.charliechao.fishintel;
 
-import android.graphics.drawable.Drawable;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,55 +10,119 @@ import android.widget.TextView;
 
 import com.charliechao.fishintel.SpeciesFragment.OnSpeciesListInteractionListener;
 
-public class SpeciesRecyclerViewAdapter extends RecyclerView.Adapter<SpeciesRecyclerViewAdapter.ViewHolder> {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-    private final SpeciesItem[] mValues;
+/**
+ * RecyclerView grouped items implementation based on:
+ * http://stackoverflow.com/questions/41447044/divide-elements-on-groups-in-recyclerview-or-grouping-recyclerview-items-say-by
+ */
+public class SpeciesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private final List<ListItem> mValues;
     private final OnSpeciesListInteractionListener mListener;
 
     public SpeciesRecyclerViewAdapter(SpeciesItem[] items, OnSpeciesListInteractionListener listener) {
-        mValues = items;
+        HashMap<String, List<SpeciesItem>> map = getGroupedList(items);
+        mValues = new ArrayList<>();
+        for (String group: map.keySet()) {
+            ListHeaderItem header = new ListHeaderItem(group);
+            mValues.add(header);
+            for (SpeciesItem spot: map.get(group)) {
+                ListObjectItem<SpeciesItem> item = new ListObjectItem<>(spot);
+                mValues.add(item);
+            }
+        }
         mListener = listener;
     }
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_species, parent, false);
-        return new ViewHolder(view);
+    private HashMap<String, List<SpeciesItem>> getGroupedList(SpeciesItem[] spots) {
+        HashMap<String, List<SpeciesItem>> map = new HashMap<>();
+        for (SpeciesItem item: spots) {
+            String key = item.getType();
+            if (map.containsKey(key)) {
+                map.get(key).add(item);
+            } else {
+                List<SpeciesItem> list = new ArrayList<>();
+                list.add(item);
+                map.put(key, list);
+            }
+        }
+        return map;
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        SpeciesItem item = mValues[position];
-        int image = item.getImage();
-        holder.mItem = item;
-        if (image != 0) {
-            holder.mImage.setImageResource(image);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        RecyclerView.ViewHolder viewHolder;
+        View view;
+        if (viewType == ListItem.TYPE_HEADER) {
+            view = inflater.inflate(R.layout.list_header_item, parent, false);
+            viewHolder = new HeaderViewHolder(view);
+        } else {
+            view = inflater.inflate(R.layout.fragment_species_list_item, parent, false);
+            viewHolder = new ItemViewHolder(view);
         }
-        holder.mName.setText(item.getName());
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    mListener.onSpeciesListInteraction(holder.mItem);
-                }
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        ListItem listItem = mValues.get(position);
+        if (holder.getItemViewType() == ListItem.TYPE_HEADER) {
+            ListHeaderItem item = (ListHeaderItem) listItem;
+            HeaderViewHolder vh = (HeaderViewHolder) holder;
+            vh.mView.setText(item.getLabel());
+        } else {
+            ListObjectItem<SpeciesItem> item = (ListObjectItem<SpeciesItem>) listItem;
+            final ItemViewHolder vh = (ItemViewHolder) holder;
+            vh.mItem = item.getObject();
+            int image = vh.mItem.getImage();
+            if (image != 0) {
+                vh.mImage.setImageResource(image);
             }
-        });
+            vh.mName.setText(vh.mItem.getName());
+            vh.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (null != mListener) {
+                        mListener.onSpeciesListInteraction(vh.mItem);
+                    }
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mValues.length;
+        return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public int getItemViewType(int position) {
+        return mValues.get(position).getType();
+    }
+
+    public class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+        public final TextView mView;
+
+        public HeaderViewHolder(View view) {
+            super(view);
+            mView = (TextView) view;
+        }
+
+    }
+
+    public class ItemViewHolder extends RecyclerView.ViewHolder {
 
         public final View mView;
         public final ImageView mImage;
         public final TextView mName;
         public SpeciesItem mItem;
 
-        public ViewHolder(View view) {
+        public ItemViewHolder(View view) {
             super(view);
             mView = view;
             mImage = (ImageView) view.findViewById(R.id.species_list_img);

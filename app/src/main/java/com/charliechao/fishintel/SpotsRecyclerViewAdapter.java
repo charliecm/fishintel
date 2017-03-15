@@ -55,8 +55,8 @@ public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        RecyclerView.ViewHolder viewHolder = null;
-        View view = null;
+        RecyclerView.ViewHolder viewHolder;
+        View view;
         if (viewType == ListItem.TYPE_HEADER) {
             view = inflater.inflate(R.layout.list_header_item, parent, false);
             viewHolder = new HeaderViewHolder(view);
