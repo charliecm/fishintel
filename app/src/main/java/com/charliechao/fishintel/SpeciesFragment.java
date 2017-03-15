@@ -28,16 +28,10 @@ public class SpeciesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_species_list, container, false);
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setAdapter(new SpeciesRecyclerViewAdapter(mDB.getAllSpecies(), mListener));
-        }
+        RecyclerView view = (RecyclerView) inflater.inflate(R.layout.fragment_species_list, container, false);
+        view.setAdapter(new SpeciesRecyclerViewAdapter(mDB.getAllSpecies(), mListener));
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {

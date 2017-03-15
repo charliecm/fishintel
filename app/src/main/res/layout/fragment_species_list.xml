@@ -9,6 +9,6 @@
     app:layoutManager="LinearLayoutManager"
     tools:context="com.charliechao.fishintel.SpeciesFragment"
     tools:listitem="@layout/fragment_species"
-    android:background="@color/colorWhite" />
+    android:background="@color/white" />
 
 

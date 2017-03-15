@@ -85,17 +85,17 @@ public class MainActivity extends AppCompatActivity implements
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     Constants.PERMISSION_LOCATION);
         }
-        // Database
+        // Initialize database
         mDB = new ContentDatabase(this);
-        // Toolbar
+        // Setup toolbar
         mToolbarLogo = (ImageView) findViewById(R.id.image_toolbar_main_logo);
         mToolbarTitle = (TextView) findViewById(R.id.text_toolbar_main_title);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar_main));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        // Bottom nav
+        // Bind bottom nav
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        // Fragments
+        // Add fragments
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         mFragment = mMapFragment = MapFragment.newInstance();
         ft.add(R.id.layout_content, mMapFragment);
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements
         switch (requestCode) {
             case Constants.PERMISSION_LOCATION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Let map fragment know user location is available
                     mMapFragment.retrieveLocation();
                 }
                 break;
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements
     private void showFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if (mFragment != null) {
+            // Hide currently visible fragment
             ft.hide(mFragment);
         }
         ft.show(fragment);

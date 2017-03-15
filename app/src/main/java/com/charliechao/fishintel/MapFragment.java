@@ -114,6 +114,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Activit
         int width = getResources().getDisplayMetrics().widthPixels;
         mMap = googleMap;
         for (SpotItem item : items) {
+            // Create spots markers
             LatLng latLng = new LatLng(item.getLatitude(), item.getLongitude());
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(latLng)
@@ -121,6 +122,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Activit
             marker.setTag(item.getId());
             builder.include(marker.getPosition());
         }
+        // Show all markers in the view
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), width, width, 120));
         mMap.setOnMarkerClickListener(this);
         retrieveLocation();
@@ -139,6 +141,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Activit
         if (mMap != null &&
                 ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
+            // Show user location on map
             mMap.setMyLocationEnabled(true);
         } else {
             Toast.makeText(getContext(), "Unable to find your location.", Toast.LENGTH_LONG).show();
