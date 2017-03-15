@@ -45,9 +45,7 @@ public class SpeciesFragment extends Fragment {
         recyclerView.setAdapter(new SpeciesRecyclerViewAdapter(mDB.getAllSpecies(), mListener));
         return view;
     }
-
-
-
+    
     @Override
     public void onDetach() {
         super.onDetach();

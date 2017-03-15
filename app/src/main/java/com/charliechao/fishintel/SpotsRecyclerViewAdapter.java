@@ -120,7 +120,7 @@ public class SpotsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         public ItemViewHolder(View view) {
             super(view);
             mView = view;
-            mName = (TextView) view.findViewById(R.id.spot_list_text_name);
+            mName = (TextView) view.findViewById(R.id.spots_list_text_name);
         }
     }
 
