@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingPrefix"
     android:id="@+id/toolbar_main"
     android:minHeight="?attr/actionBarSize"
     android:layout_width="match_parent"
@@ -11,8 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_gravity="center"
-        android:src="@drawable/logo"
-        fontPath="fonts/RobotoSlab-Regular.ttf" />
+        android:src="@drawable/logo" />
 
     <TextView
         android:id="@+id/text_toolbar_main_title"
@@ -20,6 +21,7 @@
         android:layout_height="wrap_content"
         style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Title"
         android:textColor="@color/white"
-        android:visibility="gone" />
+        android:visibility="gone"
+        fontPath="fonts/RobotoSlab-Regular.ttf" />
 
 </android.support.v7.widget.Toolbar>

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 public class SpeciesDetailsActivity extends AppCompatActivity {
 
-    private SpotItem mData;
+    private SpeciesItem mData;
     private TextView mToolbarTitle;
 
     @Override
@@ -20,12 +20,13 @@ public class SpeciesDetailsActivity extends AppCompatActivity {
         // Get intent data
         Intent intent = getIntent();
         if (intent != null) {
-            mData = (SpotItem) intent.getSerializableExtra("data");
+            mData = (SpeciesItem) intent.getSerializableExtra("data");
         }
         // Setup toolbar
         findViewById(R.id.image_toolbar_main_logo).setVisibility(View.GONE);
         mToolbarTitle = (TextView) findViewById(R.id.text_toolbar_main_title);
         mToolbarTitle.setText(mData.getName());
+        mToolbarTitle.setVisibility(View.VISIBLE);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar_main));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }

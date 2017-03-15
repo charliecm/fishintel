@@ -26,6 +26,7 @@ public class SpotDetailsActivity extends AppCompatActivity {
         findViewById(R.id.image_toolbar_main_logo).setVisibility(View.GONE);
         mToolbarTitle = (TextView) findViewById(R.id.text_toolbar_main_title);
         mToolbarTitle.setText(mData.getName());
+        mToolbarTitle.setVisibility(View.VISIBLE);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar_main));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Setup UI
