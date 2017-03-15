@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="?android:attr/selectableItemBackground">
+    android:background="@drawable/state_list_item_bg">
 
     <ImageView
         android:id="@+id/species_list_img"
