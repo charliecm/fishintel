@@ -12,7 +12,6 @@ import android.widget.TextView;
 public class SpeciesDetailsActivity extends AppCompatActivity implements SpotsFragment.OnSpotsListInteractionListener {
 
     private SpeciesItem mData;
-    private TextView mToolbarTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +26,9 @@ public class SpeciesDetailsActivity extends AppCompatActivity implements SpotsFr
         }
         // Setup toolbar
         findViewById(R.id.image_toolbar_main_logo).setVisibility(View.GONE);
-        mToolbarTitle = (TextView) findViewById(R.id.text_toolbar_main_title);
-        mToolbarTitle.setText(mData.getName());
-        mToolbarTitle.setVisibility(View.VISIBLE);
+        TextView toolbarTitle = (TextView) findViewById(R.id.text_toolbar_main_title);
+        toolbarTitle.setText(mData.getName());
+        toolbarTitle.setVisibility(View.VISIBLE);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar_main));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -25,7 +25,6 @@ import java.net.URL;
 public class SpotDetailsActivity extends AppCompatActivity implements SpeciesFragment.OnSpeciesListInteractionListener {
 
     private SpotItem mData;
-    private TextView mToolbarTitle;
     private ImageView mMap;
     private String regulationURL;
 
@@ -45,9 +44,9 @@ public class SpotDetailsActivity extends AppCompatActivity implements SpeciesFra
         regulationURL = db.getArea(mData.getAreaId()).getURL();
         // Setup toolbar
         findViewById(R.id.image_toolbar_main_logo).setVisibility(View.GONE);
-        mToolbarTitle = (TextView) findViewById(R.id.text_toolbar_main_title);
-        mToolbarTitle.setText(mData.getName());
-        mToolbarTitle.setVisibility(View.VISIBLE);
+        TextView toolbarTitle = (TextView) findViewById(R.id.text_toolbar_main_title);
+        toolbarTitle.setText(mData.getName());
+        toolbarTitle.setVisibility(View.VISIBLE);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar_main));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -78,6 +77,9 @@ public class SpotDetailsActivity extends AppCompatActivity implements SpeciesFra
         startActivity(intent);
     }
 
+    /**
+     * Opens government area regulations webpage.
+     */
     public void openRegulationLink(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(regulationURL));
@@ -92,7 +94,9 @@ public class SpotDetailsActivity extends AppCompatActivity implements SpeciesFra
 
     @Override
     public void onSpeciesListInteraction(SpeciesItem item) {
-
+        Intent intent = new Intent(this, SpeciesDetailsActivity.class);
+        intent.putExtra("data", item);
+        startActivity(intent);
     }
 
     /**
@@ -108,6 +112,7 @@ public class SpotDetailsActivity extends AppCompatActivity implements SpeciesFra
             HttpURLConnection http = null;
             URL url;
             try {
+                // Make HTTP connection
                 url = new URL(params[0]);
                 http = (HttpURLConnection) url.openConnection();
                 http.setRequestMethod("GET");
@@ -116,6 +121,7 @@ public class SpotDetailsActivity extends AppCompatActivity implements SpeciesFra
                 if (inputStream == null) {
                     return null;
                 }
+                // Read as bitmap
                 bmp = BitmapFactory.decodeStream(inputStream);
             } catch (IOException e) {
                 return null;
