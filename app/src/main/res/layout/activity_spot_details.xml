@@ -26,7 +26,8 @@
                 android:id="@+id/spot_details_map"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:onClick="openDirections" />
+                android:onClick="openDirections"
+                android:focusableInTouchMode="true" />
 
             <!--<TextView-->
                 <!--android:id="@+id/spot_details_text_description"-->

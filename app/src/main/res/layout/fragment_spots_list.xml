@@ -14,5 +14,5 @@
         android:layout_height="wrap_content"
         app:layoutManager="LinearLayoutManager"
         tools:listitem="@layout/fragment_spots_list_item" />
-    
+
 </android.support.v4.widget.NestedScrollView>
