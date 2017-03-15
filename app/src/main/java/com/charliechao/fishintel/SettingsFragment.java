@@ -37,7 +37,7 @@ public class SettingsFragment extends Fragment implements RadioGroup.OnCheckedCh
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
         // Setup temperature unit switch
         mTemperature = (RadioGroup) v.findViewById(R.id.settings_radio_temperature_unit);
-        if (mSharedPrefs.getString(Constants.PREF_KEY_TEMPERATURE, Constants.PREF_VALUE_TEMPERATURE_CELSIUS) == Constants.PREF_VALUE_TEMPERATURE_CELSIUS) {
+        if (mSharedPrefs.getString(Constants.PREF_KEY_TEMPERATURE, Constants.PREF_VALUE_TEMPERATURE_CELSIUS).equals(Constants.PREF_VALUE_TEMPERATURE_CELSIUS)) {
             mTemperature.check(R.id.settings_radio_temperature_celsius);
         } else {
             mTemperature.check(R.id.settings_radio_temperature_fahrenheit);
@@ -45,7 +45,7 @@ public class SettingsFragment extends Fragment implements RadioGroup.OnCheckedCh
         mTemperature.setOnCheckedChangeListener(this);
         // Setup metric unit switch
         mMetric = (RadioGroup) v.findViewById(R.id.settings_radio_metric_unit);
-        if (mSharedPrefs.getString(Constants.PREF_KEY_METRIC, Constants.PREF_VALUE_METRIC_METRIC) == Constants.PREF_VALUE_METRIC_METRIC) {
+        if (mSharedPrefs.getString(Constants.PREF_KEY_METRIC, Constants.PREF_VALUE_METRIC_METRIC).equals(Constants.PREF_VALUE_METRIC_METRIC)) {
             mMetric.check(R.id.settings_radio_metric_metric);
         } else {
             mMetric.check(R.id.settings_radio_metric_imperial);
