@@ -54,6 +54,7 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
         // Populate species list
         RecyclerView listSpecies = (RecyclerView) findViewById(R.id.spot_details_species_list);
         listSpecies.setAdapter(new SpeciesRecyclerViewAdapter(db.getSpecies(mData.getSpeciesIds()), this, false));
+        listSpecies.setNestedScrollingEnabled(false);
         // Show static map
         // http://stackoverflow.com/questions/6465680/how-to-determine-the-screen-width-in-terms-of-dp-or-dip-at-runtime-in-android
         DisplayMetrics dm = getResources().getDisplayMetrics();

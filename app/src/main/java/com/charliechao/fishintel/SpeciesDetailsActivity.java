@@ -48,6 +48,7 @@ public class SpeciesDetailsActivity extends Activity implements SpotsFragment.On
         ContentDatabase db = new ContentDatabase(this);
         RecyclerView listSpots = (RecyclerView) findViewById(R.id.species_details_spots_list);
         listSpots.setAdapter(new SpotsRecyclerViewAdapter(db.getSpots(mData.getmSpotsIds()), this, null));
+        listSpots.setNestedScrollingEnabled(false);
     }
 
     @Override
