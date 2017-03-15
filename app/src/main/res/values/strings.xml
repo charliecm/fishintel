@@ -14,6 +14,10 @@
     <string name="settings_metric">Metric (m)</string>
     <string name="settings_imperial">Imperial (ft)</string>
     <string name="settings_authors">Created by Charlie Chao and Shane Miao</string>
+    <string name="spot_details_species_header">Available Species</string>
+    <string name="spot_details_weather_header">Weather &amp; Tides</string>
+    <string name="spot_details_regulation_label">View area regulations</string>
+    <string name="spot_details_regulation_last_updated">Last updated yesterday</string>
     <string name="species_details_found_header">Found In</string>
     <string name="google_maps_key">AIzaSyAZmIp6z1QHywsMsxgmhMiAPlMxshcgPWY</string>
 </resources>

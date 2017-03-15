@@ -42,7 +42,7 @@ public class SpeciesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_species_list, container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.species_list_view);
-        recyclerView.setAdapter(new SpeciesRecyclerViewAdapter(mDB.getAllSpecies(), mListener));
+        recyclerView.setAdapter(new SpeciesRecyclerViewAdapter(mDB.getAllSpecies(), mListener, true));
         return view;
     }
     

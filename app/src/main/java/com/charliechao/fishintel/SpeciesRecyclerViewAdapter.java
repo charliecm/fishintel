@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.charliechao.fishintel.SpeciesFragment.OnSpeciesListInteractionListener;
@@ -22,15 +23,25 @@ public class SpeciesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private final List<ListItem> mValues;
     private final OnSpeciesListInteractionListener mListener;
+    private boolean mIsGrouped = false;
 
-    public SpeciesRecyclerViewAdapter(SpeciesItem[] items, OnSpeciesListInteractionListener listener) {
-        HashMap<String, List<SpeciesItem>> map = getGroupedList(items);
-        mValues = new ArrayList<>();
-        for (String group: map.keySet()) {
-            ListHeaderItem header = new ListHeaderItem(group);
-            mValues.add(header);
-            for (SpeciesItem spot: map.get(group)) {
-                ListObjectItem<SpeciesItem> item = new ListObjectItem<>(spot);
+    public SpeciesRecyclerViewAdapter(SpeciesItem[] items, OnSpeciesListInteractionListener listener, boolean isGrouped) {
+        mIsGrouped = isGrouped;
+        if (isGrouped) {
+            HashMap<String, List<SpeciesItem>> map = getGroupedList(items);
+            mValues = new ArrayList<>();
+            for (String group: map.keySet()) {
+                ListHeaderItem header = new ListHeaderItem(group);
+                mValues.add(header);
+                for (SpeciesItem spot: map.get(group)) {
+                    ListObjectItem<SpeciesItem> item = new ListObjectItem<>(spot);
+                    mValues.add(item);
+                }
+            }
+        } else {
+            mValues = new ArrayList<>();
+            for (SpeciesItem species: items) {
+                ListObjectItem<SpeciesItem> item = new ListObjectItem<>(species);
                 mValues.add(item);
             }
         }
@@ -91,6 +102,13 @@ public class SpeciesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                     }
                 }
             });
+            if (!mIsGrouped) {
+                // Change layout slightly for non-grouped item
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) vh.mView.getLayoutParams();
+                params.bottomMargin = 8;
+                vh.mView.setLayoutParams(params);
+                vh.mChevron.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -120,6 +138,7 @@ public class SpeciesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         public final View mView;
         public final ImageView mImage;
         public final TextView mName;
+        public final ImageView mChevron;
         public SpeciesItem mItem;
 
         public ItemViewHolder(View view) {
@@ -127,6 +146,7 @@ public class SpeciesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             mView = view;
             mImage = (ImageView) view.findViewById(R.id.species_list_img);
             mName = (TextView) view.findViewById(R.id.species_list_text_name);
+            mChevron = (ImageView) view.findViewById(R.id.species_list_chevron);
         }
 
     }
