@@ -18,8 +18,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 public class MainActivity extends Activity implements
         MapFragment.OnMapMarkerClickListener,
         SpotsFragment.OnSpotsListInteractionListener,
