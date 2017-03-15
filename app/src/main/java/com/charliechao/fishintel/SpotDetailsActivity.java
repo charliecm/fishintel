@@ -29,9 +29,17 @@ public class SpotDetailsActivity extends AppCompatActivity {
         mToolbarTitle.setVisibility(View.VISIBLE);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar_main));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         // Setup UI
         TextView txtName = (TextView) findViewById(R.id.spot_details_text_name);
         txtName.setText(mData.getName());
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

@@ -25,4 +25,8 @@
         <item name="android:textColor">@drawable/state_radio_btn_label</item>
     </style>
 
+    <style name="AppTheme.ToolbarBackIcon" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
 </resources>
