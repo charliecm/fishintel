@@ -1,8 +1,13 @@
 package com.charliechao.fishintel;
 
 /**
- * Created by charliechao on 2017-03-14.
+ * List item class for use with RecyclerView.
  */
+public abstract class ListItem {
 
-public interface ListIteme {
+    public static final int TYPE_OBJECT = 0;
+    public static final int TYPE_HEADER = 1;
+
+    abstract public int getType();
+
 }

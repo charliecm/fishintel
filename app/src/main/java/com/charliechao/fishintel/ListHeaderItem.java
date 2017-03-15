@@ -1,8 +1,23 @@
 package com.charliechao.fishintel;
 
 /**
- * Created by charliechao on 2017-03-14.
+ * List item that has a header label.
  */
+public class ListHeaderItem extends ListItem {
 
-public class ListHeaderItem {
+    public String mLabel;
+
+    public ListHeaderItem(String label) {
+        mLabel = label;
+    }
+
+    public String getLabel() {
+        return mLabel;
+    }
+
+    @Override
+    public int getType() {
+        return TYPE_HEADER;
+    }
+
 }
