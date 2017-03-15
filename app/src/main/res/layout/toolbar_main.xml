@@ -11,7 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_gravity="center"
-        android:src="@drawable/logo" />
+        android:src="@drawable/logo"
+        fontPath="fonts/RobotoSlab-Regular.ttf" />
 
     <TextView
         android:id="@+id/text_toolbar_main_title"

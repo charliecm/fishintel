@@ -32,5 +32,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.2.0'
     compile 'com.google.android.gms:play-services-maps:10.2.0'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     testCompile 'junit:junit:4.12'
 }
