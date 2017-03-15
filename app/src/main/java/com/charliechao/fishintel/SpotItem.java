@@ -1,6 +1,8 @@
 package com.charliechao.fishintel;
 
-public class SpotItem {
+import java.io.Serializable;
+
+public class SpotItem implements Serializable {
 
     private int mId;
     private String mName;

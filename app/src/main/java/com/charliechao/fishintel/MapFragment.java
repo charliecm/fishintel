@@ -27,7 +27,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Activit
 
     private OnMapMarkerClickListener mListener;
 
-    private ContentDatabase mDB;
+    private SpotItem[] mItems;
     private MapView mMapView;
     private GoogleMap mMap;
 
@@ -42,7 +42,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Activit
         super.onAttach(context);
         if (context instanceof OnMapMarkerClickListener) {
             mListener = (OnMapMarkerClickListener) context;
-            mDB = new ContentDatabase(context);
+            ContentDatabase db = new ContentDatabase(context);
+            mItems = db.getAllSpots();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -109,18 +110,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Activit
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        SpotItem[] items = mDB.getAllSpots();
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         int width = getResources().getDisplayMetrics().widthPixels;
         mMap = googleMap;
-        for (SpotItem item : items) {
+        int i = 0;
+        for (SpotItem item: mItems) {
             // Create spots markers
             LatLng latLng = new LatLng(item.getLatitude(), item.getLongitude());
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(latLng)
                     .title(item.getName()));
-            marker.setTag(item.getId());
+            marker.setTag(i);
             builder.include(marker.getPosition());
+            i++;
         }
         // Show all markers in the view
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), width, width, 120));
@@ -131,7 +133,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Activit
     @Override
     public boolean onMarkerClick(Marker marker) {
         if (mListener != null) {
-            mListener.onMapMarkerClick((int) marker.getTag());
+            mListener.onMapMarkerClick(mItems[(int) marker.getTag()]);
             return true;
         }
         return false;
@@ -149,7 +151,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Activit
     }
 
     public interface OnMapMarkerClickListener {
-        void onMapMarkerClick(int spotId);
+        void onMapMarkerClick(SpotItem item);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.charliechao.fishintel;
 
-import android.graphics.drawable.Drawable;
+import java.io.Serializable;
 
-public class SpeciesItem {
+public class SpeciesItem implements Serializable {
 
     private int mId;
     private String mName;

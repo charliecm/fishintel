@@ -2,6 +2,7 @@ package com.charliechao.fishintel;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -138,17 +139,22 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onMapMarkerClick(int spotId) {
-        Log.d(DEBUG_TAG, "Spot clicked:" + spotId);
+    public void onMapMarkerClick(SpotItem item) {
+        Intent intent = new Intent(this, SpotDetailsActivity.class);
+        intent.putExtra("data", item);
+        startActivity(intent);
     }
 
     @Override
     public void onSpeciesListInteraction(SpeciesItem item) {
-
+        Intent intent = new Intent(this, SpeciesDetailsActivity.class);
+        intent.putExtra("data", item);
+        startActivity(intent);
     }
 
     @Override
     public void onSpotsListInteraction(SpotItem item) {
-
+        onMapMarkerClick(item);
     }
+
 }
