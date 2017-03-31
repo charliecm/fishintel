@@ -139,6 +139,7 @@
                     style="@style/AppTheme.TextAppearance" />
 
                 <fragment
+                    android:id="@+id/spot_details_tides"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:name="com.charliechao.fishintel.TidesFragment"
