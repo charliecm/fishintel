@@ -138,6 +138,12 @@
                     android:text="Weather data coming soon..."
                     style="@style/AppTheme.TextAppearance" />
 
+                <fragment
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="com.charliechao.fishintel.TidesFragment"
+                    tools:layout="@layout/fragment_tides_list" />
+
             </LinearLayout>
 
         </LinearLayout>
