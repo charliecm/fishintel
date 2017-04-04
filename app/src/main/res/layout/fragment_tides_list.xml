@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:name="com.charliechao.fishintel.TidesFragment"
     tools:context="com.charliechao.fishintel.TidesFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/fragment_tides_txt_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        style="@style/AppTheme.TextAppearance"
+        android:text="@string/tides_status_waiting" />
 
-        <TextView
-            android:id="@+id/fragment_tides_txt_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/AppTheme.TextAppearance"
-            android:text="@string/tides_status_waiting" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_tides_list"
+        android:name="com.charliechao.fishintel.TidesFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="4dp"
+        android:clipToPadding="false"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.charliechao.fishintel.TidesFragment"
+        tools:listitem="@layout/fragment_tides_list_item" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/fragment_tides_list"
-            android:name="com.charliechao.fishintel.TidesFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="LinearLayoutManager"
-            tools:context="com.charliechao.fishintel.TidesFragment"
-            tools:listitem="@layout/fragment_tides_list_item" />
+    <TextView
+        android:id="@+id/fragment_tides_txt_station"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        style="@style/AppTheme.TextInfo" />
 
-        <TextView
-            android:id="@+id/fragment_tides_txt_station"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/AppTheme.TextInfo" />
-
-    </LinearLayout>
-
-</android.support.v4.widget.NestedScrollView>
+</LinearLayout>
