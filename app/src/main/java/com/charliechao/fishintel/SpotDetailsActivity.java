@@ -1,18 +1,11 @@
 package com.charliechao.fishintel;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -20,8 +13,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -30,21 +26,15 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
     private SpotItem mData;
     private ImageView mMap;
     private String regulationURL;
-    static TextView placeTextView;
-    static  TextView temperatureTextView;
-    static  TextView cloudsTextView;
-static  TextView dataTextView;
+    private TextView mPlaceTextView;
+    private TextView mTemperatureTextView;
+    private TextView mCloudsTextView;
+    private TextView mDataTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spot_details);
-        placeTextView = (TextView)findViewById(R.id.nameTextView);
-        temperatureTextView = (TextView) findViewById(R.id.temperatureTextView);
-        cloudsTextView = (TextView) findViewById(R.id.cloudsTextView) ;
-        dataTextView = (TextView) findViewById(R.id.dataTextView) ;
-
-
-
         // Get intent data
         Intent intent = getIntent();
         if (intent != null) {
@@ -79,30 +69,12 @@ static  TextView dataTextView;
                 (int) Math.min(Math.ceil(dm.density), 2) + "&markers=color:red%7C" +
                 mData.getLatitude() + "," +
                 mData.getLongitude() + "&sensor=false");
-
-
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        String provider = locationManager.getBestProvider(new Criteria(), false);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location location = locationManager.getLastKnownLocation(provider);
-
-
-
-
-        Weather task = new Weather();
-        task.execute("http://api.geonames.org/findNearByWeatherJSON?lat=49&lng=-125&username=smiao381");
-
-
+        // Weather
+        mPlaceTextView = (TextView)findViewById(R.id.nameTextView);
+        mTemperatureTextView = (TextView) findViewById(R.id.temperatureTextView);
+        mCloudsTextView = (TextView) findViewById(R.id.cloudsTextView);
+        mDataTextView = (TextView) findViewById(R.id.dataTextView);
+        new FetchWeatherTask().execute("http://api.geonames.org/findNearByWeatherJSON?lat=49&lng=-125&username=smiao381");
     }
 
     /**
@@ -175,6 +147,55 @@ static  TextView dataTextView;
         protected void onPostExecute(Bitmap bmp) {
             if (bmp != null) {
                 mMap.setImageBitmap(bmp);
+            }
+        }
+
+    }
+
+    /**
+     * Retrieves weather data for spot location.
+     */
+    public class FetchWeatherTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String  result = "";
+            URL url;
+            HttpURLConnection urlConnection;
+            try {
+                url = new URL (urls [0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = urlConnection.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in);
+                int data = reader.read();
+                while (data != -1){
+                    char current = (char) data;
+                    result += current;
+                    data = reader.read();
+                }
+                return  result;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected  void onPostExecute(String result){
+            super.onPostExecute(result);
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONObject weatherObservation = new JSONObject(jsonObject.getString("weatherObservation"));
+                String countryCode = weatherObservation.getString("countryCode");
+                String temperature = weatherObservation.getString("temperature");
+                String datetime = weatherObservation.getString("datetime");
+                String clouds = weatherObservation.getString("clouds");
+                mDataTextView.setText(datetime);
+                mTemperatureTextView.setText(temperature);
+                mCloudsTextView.setText(clouds);
+                mPlaceTextView.setText(countryCode);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 

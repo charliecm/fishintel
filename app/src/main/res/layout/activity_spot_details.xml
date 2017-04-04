@@ -151,7 +151,6 @@
                             android:layout_height="138dp"
                             app:srcCompat="@drawable/weather" />
 
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -200,11 +199,10 @@
                     </LinearLayout>
                 </LinearLayout>
 
-
                 <fragment
                     android:id="@+id/spot_details_tides"
                     android:name="com.charliechao.fishintel.TidesFragment"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:layout="@layout/fragment_tides_list" />
 
