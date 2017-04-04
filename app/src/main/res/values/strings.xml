@@ -22,5 +22,6 @@
     <string name="species_details_found_header">Found In</string>
     <string name="google_maps_key">AIzaSyAZmIp6z1QHywsMsxgmhMiAPlMxshcgPWY</string>
     <string name="tides_status_waiting">Getting tides data…</string>
-    <string name="tides_status_error">Unable to get tides data :(</string>
+    <string name="tides_status_error_connect">Unable to get tides data :(</string>
+    <string name="tides_status_error_parse">Failed to parse tides data :(</string>
 </resources>
