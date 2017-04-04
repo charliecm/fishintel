@@ -26,4 +26,5 @@
     <string name="tides_status_error_connect">Unable to get tides data :(</string>
     <string name="tides_status_error_parse">Failed to parse tides data :(</string>
     <string name="tides_status_error_invalid">Invalid station.</string>
+    <string name="spot_details_weather_label">View additional forecast</string>
 </resources>

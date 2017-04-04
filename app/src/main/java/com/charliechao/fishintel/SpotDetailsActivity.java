@@ -59,6 +59,7 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
             mUseMetricUnit = true;
         }
         // Get regulation URL
+        // TODO: Last updated text
         ContentDatabase db = new ContentDatabase(this);
         mRegulationURL = db.getArea(mData.getAreaId()).getURL();
         // Setup toolbar
@@ -134,6 +135,15 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
     public void openRegulationLink(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(mRegulationURL));
+        startActivity(intent);
+    }
+
+    /**
+     * Opens weather webpage.
+     */
+    public void openWeatherLink(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://darksky.net/forecast/" + mData.getLatitude() + "," + mData.getLongitude()));
         startActivity(intent);
     }
 
@@ -272,6 +282,7 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
                 }
                 SimpleDateFormat dateParse = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d", Locale.ENGLISH);
+                // TODO: Dynamic weather icon
                 mWeatherDate.setText(dateFormat.format(dateParse.parse(date)));
                 mWeatherCondition.setText(condition);
                 mWeatherTemperature.setText(temperature);
