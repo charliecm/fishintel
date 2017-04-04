@@ -27,4 +27,5 @@
     <string name="tides_status_error_parse">Failed to parse tides data :(</string>
     <string name="tides_status_error_invalid">Invalid station.</string>
     <string name="spot_details_weather_label">View additional forecast</string>
+    <string name="main_license_label">Get BC fishing license</string>
 </resources>

@@ -30,7 +30,6 @@ public class MainActivity extends Activity implements
     private SpotsFragment mSpotsFragment;
     private SpeciesFragment mSpeciesFragment;
     private SettingsFragment mSettingsFragment;
-    private ContentDatabase mDB;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -82,8 +81,6 @@ public class MainActivity extends Activity implements
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     Constants.PERMISSION_LOCATION);
         }
-        // Initialize database
-        mDB = new ContentDatabase(this);
         // Setup toolbar
         mToolbarLogo = (ImageView) findViewById(R.id.image_toolbar_main_logo);
         mToolbarTitle = (TextView) findViewById(R.id.text_toolbar_main_title);

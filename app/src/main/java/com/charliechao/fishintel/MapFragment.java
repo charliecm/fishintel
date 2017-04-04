@@ -2,8 +2,10 @@ package com.charliechao.fishintel;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -58,6 +60,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Activit
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
         return v;
+    }
+
+    /**
+     * Opens BC license webpage.
+     */
+    public void openLicenseLink(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("http://www.fishing.gov.bc.ca/"));
+        startActivity(intent);
     }
 
     @Override
