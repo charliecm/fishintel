@@ -84,17 +84,20 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
         db = new ContentDatabase(this);
         double minDistance = Double.MAX_VALUE;
         int stationId = 0;
+        String stationName = "";
         for (TideStationItem item: db.getAllTideStations()) {
             double distance = getDistance(mData.getLatitude(), item.getLatitude(), mData.getLongitude(), item.getLongitude(), 0, 0);
             if (distance < minDistance) {
                 minDistance = distance;
                 stationId = item.getStationId();
+                stationName = item.getName();
             }
         }
         // Create tides fragment
         TidesFragment tidesFragment = new TidesFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("stationId", stationId);
+        bundle.putString("stationName", stationName);
         tidesFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.spot_details_weather_tides, tidesFragment);
@@ -169,6 +172,7 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
             URL url;
             try {
                 // Make HTTP connection
+                // TODO: Cancel logic
                 url = new URL(params[0]);
                 http = (HttpURLConnection) url.openConnection();
                 http.setRequestMethod("GET");
@@ -209,6 +213,8 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
             URL url;
             HttpURLConnection urlConnection;
             try {
+                // Make HTTP connection
+                // TODO: Cancel logic
                 url = new URL (urls [0]);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream in = urlConnection.getInputStream();
@@ -230,6 +236,7 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
         protected  void onPostExecute(String result){
             super.onPostExecute(result);
             try {
+                // Extract weather data
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject weatherObservation = new JSONObject(jsonObject.getString("weatherObservation"));
                 String countryCode = weatherObservation.getString("countryCode");

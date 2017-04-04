@@ -11,6 +11,11 @@
         <item name="android:textColor">@color/primary</item>
     </style>
 
+    <style name="AppTheme.TextInfo" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/grayDark</item>
+    </style>
+
     <style name="AppTheme.List.Header" parent="AppTheme.TextAppearance">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/accent</item>

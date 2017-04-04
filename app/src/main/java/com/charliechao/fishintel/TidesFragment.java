@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +27,8 @@ public class TidesFragment extends Fragment {
 
     private int mStationId;
     private TextView mStatus;
+    private TextView mStation;
+    private String mStationName;
     private RecyclerView mList;
 
     public TidesFragment() {}
@@ -42,6 +42,7 @@ public class TidesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tides_list, container, false);
         mStatus = (TextView) view.findViewById(R.id.fragment_tides_txt_status);
+        mStation = (TextView) view.findViewById(R.id.fragment_tides_txt_station);
         mList = (RecyclerView) view.findViewById(R.id.fragment_tides_list);
         mList.setNestedScrollingEnabled(false);
         return view;
@@ -53,6 +54,11 @@ public class TidesFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             mStationId = bundle.getInt("stationId");
+            mStationName = bundle.getString("stationName");
+        }
+        if (mStationName.length() == 0) {
+            mStatus.setText(getString(R.string.tides_status_error_invalid));
+            return;
         }
         new FetchTidesTask().execute(mStationId);
     }
@@ -65,7 +71,7 @@ public class TidesFragment extends Fragment {
         @Override
         protected Document doInBackground(Integer... params) {
             try {
-                // TODO: Cancel connection on fragment destroy
+                // TODO: Cancel logic
                 return Jsoup.connect("http://www.tides.gc.ca/eng/station?sid=" + params[0]).get();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -105,6 +111,7 @@ public class TidesFragment extends Fragment {
                     items.add(new TidesItem(date, time, height));
                 }
                 mList.setAdapter(new TidesRecyclerViewAdapter(items.toArray(new TidesItem[items.size()])));
+                mStation.setText("* Tide levels are measured from " + mStationName);
             } catch (Exception e) {
                 // Try and catch'em all
                 e.printStackTrace();

@@ -29,6 +29,12 @@
             tools:context="com.charliechao.fishintel.TidesFragment"
             tools:listitem="@layout/fragment_tides_list_item" />
 
+        <TextView
+            android:id="@+id/fragment_tides_txt_station"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/AppTheme.TextInfo" />
+
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
