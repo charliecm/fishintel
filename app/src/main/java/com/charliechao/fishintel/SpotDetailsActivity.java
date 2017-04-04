@@ -6,11 +6,14 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONObject;
@@ -75,6 +78,27 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
         mCloudsTextView = (TextView) findViewById(R.id.cloudsTextView);
         mDataTextView = (TextView) findViewById(R.id.dataTextView);
         new FetchWeatherTask().execute("http://api.geonames.org/findNearByWeatherJSON?lat=49&lng=-125&username=smiao381");
+        // Tides
+        // Find the closest tide station
+        // TODO: Map tide stations to spots for best accuracy
+        db = new ContentDatabase(this);
+        double minDistance = Double.MAX_VALUE;
+        int stationId = 0;
+        for (TideStationItem item: db.getAllTideStations()) {
+            double distance = getDistance(mData.getLatitude(), item.getLatitude(), mData.getLongitude(), item.getLongitude(), 0, 0);
+            if (distance < minDistance) {
+                minDistance = distance;
+                stationId = item.getStationId();
+            }
+        }
+        // Create tides fragment
+        TidesFragment tidesFragment = new TidesFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("stationId", stationId);
+        tidesFragment.setArguments(bundle);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.spot_details_weather_tides, tidesFragment);
+        transaction.commit();
     }
 
     /**
@@ -94,6 +118,28 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(regulationURL));
         startActivity(intent);
+    }
+
+    /**
+     * http://stackoverflow.com/a/16794680
+     * Calculates the distance between two points in latitude and longitude taking
+     * into account height difference. If you are not interested in height
+     * difference pass 0.0. Uses Haversine method as its base.
+     * @returns Distance in meters.
+     */
+    public double getDistance(double lat1, double lat2, double lon1,
+                                  double lon2, double el1, double el2) {
+        final int R = 6371; // Radius of the earth
+        Double latDistance = Math.toRadians(lat2 - lat1);
+        Double lonDistance = Math.toRadians(lon2 - lon1);
+        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000;
+        double height = el1 - el2;
+        distance = Math.pow(distance, 2) + Math.pow(height, 2);
+        return Math.sqrt(distance);
     }
 
     @Override

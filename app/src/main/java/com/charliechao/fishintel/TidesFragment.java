@@ -19,20 +19,20 @@ public class TidesFragment extends Fragment {
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        RecyclerView view = (RecyclerView) inflater.inflate(R.layout.fragment_tides_list, container, false);
+        return view;
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
             mStationId = bundle.getInt("stationId");
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        RecyclerView view = (RecyclerView) inflater.inflate(R.layout.fragment_tides_list, container, false);
-        view.setAdapter(new TidesRecyclerViewAdapter(new TidesItem[1]));
-        return view;
+        RecyclerView view = (RecyclerView) getView();
     }
 
 }
