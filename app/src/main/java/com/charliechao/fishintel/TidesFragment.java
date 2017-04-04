@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,9 @@ public class TidesFragment extends Fragment {
         mStatus = (TextView) view.findViewById(R.id.fragment_tides_txt_status);
         mStation = (TextView) view.findViewById(R.id.fragment_tides_txt_station);
         mList = (RecyclerView) view.findViewById(R.id.fragment_tides_list);
+        LinearLayoutManager layout
+                = new LinearLayoutManager(container.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        mList.setLayoutManager(layout);
         mList.setNestedScrollingEnabled(false);
         return view;
     }
@@ -88,9 +92,9 @@ public class TidesFragment extends Fragment {
             }
             mStatus.setVisibility(View.GONE);
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-            DateFormat hourFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+            DateFormat hourFormat = new SimpleDateFormat("kk:mm", Locale.ENGLISH);
             ArrayList<TidesItem> items = new ArrayList<>();
-            Elements tables = doc.select(".stationTables table");
+            Elements tables = doc.select(".stationTables .grid-12 table");
             try {
                 for (Element table : tables) {
                     // Get table date
@@ -110,8 +114,8 @@ public class TidesFragment extends Fragment {
                     }
                     items.add(new TidesItem(date, time, height));
                 }
-                mList.setAdapter(new TidesRecyclerViewAdapter(items.toArray(new TidesItem[items.size()])));
-                mStation.setText("* Tide levels are measured from " + mStationName);
+                mList.setAdapter(new TidesRecyclerViewAdapter(items.toArray(new TidesItem[items.size()]), getContext()));
+                mStation.setText("Tide levels are measured from " + mStationName);
             } catch (Exception e) {
                 // Try and catch'em all
                 e.printStackTrace();

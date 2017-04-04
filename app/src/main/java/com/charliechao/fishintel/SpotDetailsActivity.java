@@ -100,7 +100,7 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
         bundle.putString("stationName", stationName);
         tidesFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.spot_details_weather_tides, tidesFragment);
+        transaction.add(R.id.spot_details_tides, tidesFragment);
         transaction.commit();
     }
 
