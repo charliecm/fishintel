@@ -17,13 +17,13 @@ public class TidesRecyclerViewAdapter extends RecyclerView.Adapter<TidesRecycler
 
     private final TidesItem[] mValues;
     private ViewGroup mParent;
-    private boolean useMetricUnit = true;
+    private boolean mUseMetricUnit = true;
 
     public TidesRecyclerViewAdapter(TidesItem[] items, Context context) {
         mValues = items;
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         if (prefs.getString(Constants.PREF_KEY_METRIC, Constants.PREF_VALUE_METRIC_METRIC).equals(Constants.PREF_VALUE_METRIC_METRIC)) {
-            useMetricUnit = true;
+            mUseMetricUnit = true;
         }
     }
 
@@ -38,7 +38,7 @@ public class TidesRecyclerViewAdapter extends RecyclerView.Adapter<TidesRecycler
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         TidesItem item = holder.item = mValues[position];
-        holder.date.setText(item.getDay());
+        holder.date.setText(item.getDate());
         int size = item.time.length;
         if (holder.graph.getChildCount() > 0) {
             // Prevent duplication of bars
@@ -60,7 +60,7 @@ public class TidesRecyclerViewAdapter extends RecyclerView.Adapter<TidesRecycler
             time.setText(TidesItem.getHour(item.time[i]));
             // Height
             TextView height = (TextView) graphItem.findViewById(R.id.tides_graph_height);
-            if (useMetricUnit) {
+            if (mUseMetricUnit) {
                 height.setText(item.height[i] + " m");
             } else {
                 height.setText((item.height[i] * 3.28084)  + " ft");

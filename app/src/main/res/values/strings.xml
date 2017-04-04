@@ -16,6 +16,7 @@
     <string name="settings_authors">Created by Charlie Chao and Shane Miao</string>
     <string name="spot_details_species_header">Available Species</string>
     <string name="spot_details_weather_header">Weather</string>
+    <string name="spot_details_weather_waiting">Getting weather info…</string>
     <string name="spot_details_regulation_label">View area regulations</string>
     <string name="spot_details_regulation_last_updated">Last updated yesterday</string>
     <string name="spot_details_tides_header">Tides</string>

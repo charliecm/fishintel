@@ -1,19 +1,19 @@
 package com.charliechao.fishintel;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONObject;
@@ -23,16 +23,21 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnSpeciesListInteractionListener {
 
     private SpotItem mData;
     private ImageView mMap;
-    private String regulationURL;
-    private TextView mPlaceTextView;
-    private TextView mTemperatureTextView;
-    private TextView mCloudsTextView;
-    private TextView mDataTextView;
+    private String mRegulationURL;
+    private ImageView mWeatherImg;
+    private TextView mWeatherDate;
+    private TextView mWeatherCondition;
+    private TextView mWeatherTemperature;
+    private TextView mWeatherWind;
+    private boolean mUseCelsius = false;
+    private boolean mUseMetricUnit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +50,17 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
         } else {
             finish();
         }
+        // Get preferences
+        SharedPreferences prefs = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        if (prefs.getString(Constants.PREF_KEY_TEMPERATURE, Constants.PREF_VALUE_TEMPERATURE_CELSIUS).equals(Constants.PREF_VALUE_TEMPERATURE_CELSIUS)) {
+            mUseCelsius = true;
+        }
+        if (prefs.getString(Constants.PREF_KEY_METRIC, Constants.PREF_VALUE_METRIC_METRIC).equals(Constants.PREF_VALUE_METRIC_METRIC)) {
+            mUseMetricUnit = true;
+        }
         // Get regulation URL
         ContentDatabase db = new ContentDatabase(this);
-        regulationURL = db.getArea(mData.getAreaId()).getURL();
+        mRegulationURL = db.getArea(mData.getAreaId()).getURL();
         // Setup toolbar
         findViewById(R.id.image_toolbar_main_logo).setVisibility(View.GONE);
         TextView toolbarTitle = (TextView) findViewById(R.id.text_toolbar_main_title);
@@ -73,10 +86,11 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
                 mData.getLatitude() + "," +
                 mData.getLongitude() + "&sensor=false");
         // Weather
-        mPlaceTextView = (TextView)findViewById(R.id.nameTextView);
-        mTemperatureTextView = (TextView) findViewById(R.id.temperatureTextView);
-        mCloudsTextView = (TextView) findViewById(R.id.cloudsTextView);
-        mDataTextView = (TextView) findViewById(R.id.dataTextView);
+        mWeatherImg = (ImageView) findViewById(R.id.spot_details_weather_img);
+        mWeatherDate = (TextView) findViewById(R.id.spot_details_weather_date);
+        mWeatherCondition = (TextView) findViewById(R.id.spot_details_weather_condition);
+        mWeatherTemperature = (TextView) findViewById(R.id.spot_details_weather_temperature);
+        mWeatherWind = (TextView)findViewById(R.id.spot_details_weather_wind);
         new FetchWeatherTask().execute("http://api.geonames.org/findNearByWeatherJSON?lat=49&lng=-125&username=smiao381");
         // Tides
         // Find the closest tide station
@@ -119,7 +133,7 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
      */
     public void openRegulationLink(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(regulationURL));
+        intent.setData(Uri.parse(mRegulationURL));
         startActivity(intent);
     }
 
@@ -234,19 +248,34 @@ public class SpotDetailsActivity extends Activity implements SpeciesFragment.OnS
 
         @Override
         protected  void onPostExecute(String result){
-            super.onPostExecute(result);
             try {
                 // Extract weather data
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject weatherObservation = new JSONObject(jsonObject.getString("weatherObservation"));
-                String countryCode = weatherObservation.getString("countryCode");
+                String date = weatherObservation.getString("datetime");
+                String condition = weatherObservation.getString("weatherCondition");
+                String cloud = weatherObservation.getString("clouds");
+                if (condition.equals("n/a") && !cloud.isEmpty()) {
+                    condition = WordUtils.capitalize(cloud);
+                }
                 String temperature = weatherObservation.getString("temperature");
-                String datetime = weatherObservation.getString("datetime");
-                String clouds = weatherObservation.getString("clouds");
-                mDataTextView.setText(datetime);
-                mTemperatureTextView.setText(temperature);
-                mCloudsTextView.setText(clouds);
-                mPlaceTextView.setText(countryCode);
+                if (mUseCelsius) {
+                    temperature = (Integer.parseInt(temperature)) + " °C";
+                } else {
+                    temperature = (int)(Integer.parseInt(temperature) * 1.8 + 32) + " °F";
+                }
+                String wind = weatherObservation.getString("windSpeed");
+                if (mUseMetricUnit) {
+                    wind = (Integer.parseInt(wind)) + " km/h";
+                } else {
+                    wind = (int)(Float.parseFloat(wind) * 0.621371) + " mph";
+                }
+                SimpleDateFormat dateParse = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d", Locale.ENGLISH);
+                mWeatherDate.setText(dateFormat.format(dateParse.parse(date)));
+                mWeatherCondition.setText(condition);
+                mWeatherTemperature.setText(temperature);
+                mWeatherWind.setText(wind);
             } catch (Exception e) {
                 e.printStackTrace();
             }

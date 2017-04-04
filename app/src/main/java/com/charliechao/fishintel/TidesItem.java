@@ -24,9 +24,9 @@ public class TidesItem {
         mMaxHeight = max;
     }
 
-    public String getDay() {
-        SimpleDateFormat f = new SimpleDateFormat("EEE, MMM d", Locale.ENGLISH);
-        return f.format(this.date);
+    public String getDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d", Locale.ENGLISH);
+        return dateFormat.format(this.date);
     }
 
     public float getMaxHeight() {
@@ -34,8 +34,8 @@ public class TidesItem {
     }
 
     public static String getHour(Date time) {
-        SimpleDateFormat f = new SimpleDateFormat("kk:mm", Locale.ENGLISH);
-        return f.format(time);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("kk:mm", Locale.ENGLISH);
+        return dateFormat.format(time);
     }
 
 }
