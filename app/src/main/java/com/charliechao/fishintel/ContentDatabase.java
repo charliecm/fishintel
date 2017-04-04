@@ -167,6 +167,38 @@ public class ContentDatabase extends SQLiteAssetHelper {
         return getRegion(null);
     }
 
+    public TideStationItem[] getTideStations(int[] ids) {
+        String[] columns = { "id", "stationId", "name", "latitude", "longitude" };
+        String selection = "";
+        if (ids != null) {
+            selection = "id in (" + toSimpleList(ids) + ")";
+        }
+        Cursor cursor = mDB.query("tide_stations", columns, selection, null, null, null, null);
+        ArrayList<TideStationItem> items = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            int stationId = cursor.getInt(1);
+            String name = cursor.getString(2);
+            float latitude = cursor.getFloat(3);
+            float longitude = cursor.getFloat(4);
+            items.add(new TideStationItem(id, stationId, name, latitude, longitude));
+        }
+        cursor.close();
+        return items.toArray(new TideStationItem[items.size()]);
+    }
+
+    public TideStationItem getTideStation(int id) {
+        try {
+            return getTideStations(new int[]{ id })[0];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+
+    public TideStationItem[] getAllTideStations() {
+        return getTideStations(null);
+    }
+
     private String toSimpleList(int[] array) {
         String output = Arrays.toString(array);
         return output.substring(1, output.length() - 1);
