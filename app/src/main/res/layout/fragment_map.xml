@@ -7,13 +7,12 @@
     tools:context="com.charliechao.fishintel.MapFragment">
 
     <LinearLayout
-        android:id="@+id/spot_details_button_regulations"
+        android:id="@+id/map_btn_license"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/state_list_item_bg"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:onClick="openLicenseLink"
         android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatImageView

@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,13 +27,14 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback, GoogleMap.OnMarkerClickListener {
+public class MapFragment extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback, GoogleMap.OnMarkerClickListener, View.OnClickListener {
 
     private OnMapMarkerClickListener mListener;
 
     private SpotItem[] mItems;
     private MapView mMapView;
     private GoogleMap mMap;
+    private LinearLayout mLicense;
 
     public MapFragment() {}
 
@@ -59,16 +62,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Activit
         mMapView = (MapView) v.findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
+        mLicense = (LinearLayout) v.findViewById(R.id.map_btn_license);
+        mLicense.setOnClickListener(this);
         return v;
-    }
-
-    /**
-     * Opens BC license webpage.
-     */
-    public void openLicenseLink(View view) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("http://www.fishing.gov.bc.ca/"));
-        startActivity(intent);
     }
 
     @Override
@@ -117,6 +113,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Activit
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == mLicense) {
+            // Open license info webpage
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("http://www.fishing.gov.bc.ca/"));
+            startActivity(intent);
+        }
     }
 
     @Override
