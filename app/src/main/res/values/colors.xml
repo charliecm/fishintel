@@ -7,4 +7,6 @@
     <color name="grayLight">#A3B4CC</color>
     <color name="grayTint">#F0F6FF</color>
     <color name="white">#FFFFFF</color>
+    <color name="white50">#80FFFFFF</color>
+    <color name="white20">#33FFFFFF</color>
 </resources>

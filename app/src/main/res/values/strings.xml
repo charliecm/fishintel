@@ -28,4 +28,14 @@
     <string name="tides_status_error_invalid">Invalid station.</string>
     <string name="spot_details_weather_label">View additional forecast</string>
     <string name="main_license_label">Get BC fishing license</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="onboarding_subtitle">Your pocket guide to fishing in BC</string>
+    <string name="onboarding_next_label">Next</string>
+    <string name="onboarding_next_go_label">Let\'s Go</string>
+    <string name="onboarding_slide1_text">Find fishing spots.</string>
+    <string name="onboarding_slide1_subtext">(in Vancouver Island only, for now)</string>
+    <string name="onboarding_slide2_text">Get info on regulations, weather and tides forecast.</string>
+    <string name="onboarding_slide3_text">Learn about species in the area.</string>
 </resources>

@@ -6,12 +6,6 @@
     android:orientation="vertical"
     tools:context="com.charliechao.fishintel.MapFragment">
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
     <LinearLayout
         android:id="@+id/spot_details_button_regulations"
         android:layout_width="match_parent"
@@ -49,5 +43,11 @@
             app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
 
     </LinearLayout>
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

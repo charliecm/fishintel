@@ -71,9 +71,15 @@ public class MainActivity extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Check preferences
-        // TODO: Check first-time usage
         SharedPreferences sharedPrefs = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         sharedPrefs.edit().putString(Constants.PREF_KEY_VERSION, String.valueOf(BuildConfig.VERSION_CODE)).apply();
+        if (!sharedPrefs.getBoolean(Constants.PREF_KEY_FIRST_TIME, false)) {
+            // Start onboarding
+            Intent onboard = new Intent(this, OnboardingActivity.class);
+            startActivity(onboard);
+            finish();
+            return;
+        }
         // Ask for location permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {

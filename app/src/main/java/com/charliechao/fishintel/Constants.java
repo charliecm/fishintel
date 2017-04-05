@@ -5,6 +5,7 @@ public final class Constants {
     // Shared preferences
     public static final String PREF_NAME = "settings";
     public static final String PREF_KEY_VERSION = "version";
+    public static final String PREF_KEY_FIRST_TIME = "first_time";
     public static final String PREF_KEY_TEMPERATURE = "temperature_unit";
     public static final String PREF_KEY_METRIC = "metric_unit";
     public static final String PREF_VALUE_TEMPERATURE_CELSIUS = "celsius";
