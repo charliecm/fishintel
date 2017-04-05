@@ -35,8 +35,9 @@ public class OnboardingActivity extends AppCompatActivity implements ViewPager.O
      * Shows the next slide.
      */
     public void next(View view) {
-        mPager.setCurrentItem(mPager.getCurrentItem() + 1);
-        if (mPager.getCurrentItem() == ITEMS_COUNT - 1) {
+        int position = mPager.getCurrentItem() + 1;
+        mPager.setCurrentItem(position);
+        if (position == ITEMS_COUNT) {
             finishOnboarding();
         }
     }
