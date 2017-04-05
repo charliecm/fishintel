@@ -11,16 +11,18 @@ import android.widget.TextView;
 
 public class TidesRecyclerViewAdapter extends RecyclerView.Adapter<TidesRecyclerViewAdapter.ViewHolder> {
 
-    public static final int ITEM_WIDTH = 300;
-    public static final int BAR_HEIGHT = 120;
+    public static final int ITEM_WIDTH = 220;
+    public static final int BAR_HEIGHT = 96;
     public static final int BAR_MARGIN = 4;
 
+    private final Context mContext;
     private final TidesItem[] mValues;
     private ViewGroup mParent;
     private boolean mUseMetricUnit = true;
 
     public TidesRecyclerViewAdapter(TidesItem[] items, Context context) {
         mValues = items;
+        mContext = context;
         SharedPreferences prefs = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         if (prefs.getString(Constants.PREF_KEY_METRIC, Constants.PREF_VALUE_METRIC_METRIC).equals(Constants.PREF_VALUE_METRIC_METRIC)) {
             mUseMetricUnit = true;
@@ -51,9 +53,12 @@ public class TidesRecyclerViewAdapter extends RecyclerView.Adapter<TidesRecycler
             // Bar
             View bar = graphItem.findViewById(R.id.tides_graph_bar);
             float heightPercentage = item.height[i] / item.getMaxHeight();
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ITEM_WIDTH / size - (BAR_MARGIN * (size - 1)),
-                    (int)(BAR_HEIGHT * heightPercentage));
-            params.setMargins(0, (int)(BAR_HEIGHT - BAR_HEIGHT * heightPercentage), BAR_MARGIN, 0);
+            float density = mContext.getResources().getDisplayMetrics().density;
+            int width = (int)(ITEM_WIDTH * density);
+            int barHeight = (int)(BAR_HEIGHT * density);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width / size - (BAR_MARGIN * (size - 1)),
+                    (int)(barHeight * heightPercentage));
+            params.setMargins(0, (int)(barHeight - barHeight * heightPercentage), BAR_MARGIN, 0);
             bar.setLayoutParams(params);
             // Time
             TextView time = (TextView) graphItem.findViewById(R.id.tides_graph_time);
